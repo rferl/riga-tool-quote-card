@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	h1 {
+		@apply my-3 text-lg font-bold;
+	}
+	.btn-base {
+		@apply mx-2 rounded-lg border border-gray-100 bg-gradient-to-tr px-4 py-1 shadow-md transition hover:scale-102 hover:shadow-lg active:shadow-sm;
+	}
+	.search-base {
+		@apply w-[200px] rounded-md border border-gray-300 bg-white px-4 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 sm:text-sm;
+	}
+	.search-base-orange {
+		@apply search-base focus:border-orange-riga-50 focus:ring-orange-riga-50;
+	}
+	.search-base-blue {
+		@apply search-base focus:border-blue-riga-50 focus:ring-blue-riga-50;
+	}
+	.title-base {
+		@apply w-5/6 border-0 p-2 text-gray-500 placeholder:text-gray-400 focus:shadow-[0px_1px_0px_#ccc] focus:outline-none focus:ring-0  lg:w-1/2;
+	}
+	.btn-table-action {
+		@apply w-full py-2 pl-2 pr-4 text-left hover:bg-blue-riga-15 hover:text-black;
+	}
+	.text-shadow {
+		/* Text-shadow not implemented in tailwind */
+		text-shadow: 1px 1px 4px #ccc;
+	}
+}
+
+@layer base {
+	/* Skolar */
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-Light-Webfont.woff2') format('woff2');
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-LightItalic.woff2') format('woff2');
+		font-weight: 300;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-Regular.woff2') format('woff2');
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-Italic.woff2') format('woff2');
+		font-weight: 400;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-Semibold.woff2') format('woff2');
+		font-weight: 600;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-SemiboldItalic.woff2') format('woff2');
+		font-weight: 600;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-Bold.woff2') format('woff2');
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar';
+		src: url('/fonts/SkolarPE-BoldItalic.woff2') format('woff2');
+		font-weight: 700;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	/* Skolar Sans */
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-Th.woff2') format('woff2');
+		font-weight: 100;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-ThIt.woff2') format('woff2');
+		font-weight: 100;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPE-El.woff2') format('woff2');
+		font-weight: 200;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEExWeb-ElIt.woff2') format('woff2');
+		font-weight: 200;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-Lt.woff2') format('woff2');
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-LtIt.woff2') format('woff2');
+		font-weight: 300;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPE-Rg.woff2') format('woff2');
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-It.woff2') format('woff2');
+		font-weight: 400;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-Me.woff2') format('woff2');
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-MeIt.woff2') format('woff2');
+		font-weight: 500;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPE-Sb.woff2') format('woff2');
+		font-weight: 600;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-SbIt.woff2') format('woff2');
+		font-weight: 600;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-Bd.woff2') format('woff2');
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEExWeb-BdIt.woff2') format('woff2');
+		font-weight: 700;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-Eb.woff2') format('woff2');
+		font-weight: 800;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-EbIt.woff2') format('woff2');
+		font-weight: 800;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-Bl.woff2') format('woff2');
+		font-weight: 900;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'skolar-sans';
+		src: url('/fonts/SkolarSansPEWeb-BlIt.woff2') format('woff2');
+		font-weight: 900;
+		font-style: italic;
+		font-display: swap;
+	}
+}
