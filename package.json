@@ -1,5 +1,5 @@
 {
-	"name": "riga-quote-card",
+	"name": "riga-tool-quote-card",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
