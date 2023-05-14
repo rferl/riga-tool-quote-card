@@ -13,6 +13,7 @@ export default {
       },
       colors: {
         'gray': {
+          '5': '#FDFDFD',
           '25': '#FBFCFD'
         },
         'orange-riga': {
