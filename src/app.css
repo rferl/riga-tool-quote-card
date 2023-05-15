@@ -14,7 +14,7 @@
 	.rt-legend {
 		@apply w-full border-y border-gray-300 bg-gray-25 px-4 py-2 font-semibold;
 	}
-	.rt-control {
+	.rt-setting {
 		@apply my-2 flex w-1/2 flex-col px-4;
 	}
 	.rt-label {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getID } from '../utils/index.js';
+	import { getID } from '../../utils/index.js';
 
 	export let tool: string; // required for unique element id's
 	export let label: string = 'Label';
