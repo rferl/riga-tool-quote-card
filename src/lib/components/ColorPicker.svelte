@@ -30,13 +30,13 @@
 	});
 </script>
 
-<label for={`${id}-hex`} class="my-1 text-sm font-semibold text-gray-500">{label}</label>
+<label for={`${id}-hex`} class="rt-label">{label}</label>
 <div class="flex items-center">
 	<input
 		type="text"
 		name={`${id}-hex`}
 		id={`${id}-hex`}
-		class="bg-gray-5 w-full max-w-[8rem] rounded border-gray-200 py-[0.25rem] text-sm"
+		class="rt-input"
 		bind:value={hexInput}
 		on:change={updateColor}
 	/>

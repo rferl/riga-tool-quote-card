@@ -11,41 +11,28 @@
 </script>
 
 <!-- Notes below -->
-<form action="" class="font-skolar-sans relative">
-	<fieldset class="my-4 flex flex-wrap">
-		<legend class="bg-gray-25 w-full border-y border-gray-300 px-4 py-2 font-semibold"
-			>Card Settings</legend
-		>
-		<div class="my-2 flex w-[100%] flex-col px-4">
-			<label for="quote-text" class="my-1 text-sm font-semibold text-gray-500">Quote text</label>
-			<textarea
-				name="quote-text"
-				id="quote-text"
-				cols="10"
-				rows="3"
-				class="bg-gray-5 rounded border-gray-200 py-[0.25rem] text-sm"
-			/>
+<!-- <form action="" class="font-skolar-sans relative"> -->
+<form action="" class="rt-form">
+	<fieldset class="rt-fieldset">
+		<legend class="rt-legend">Card Settings</legend>
+		<div class="rt-control w-full">
+			<label for="quote-text" class="rt-label">Quote text</label>
+			<textarea name="quote-text" id="quote-text" cols="10" rows="3" class="rt-input max-w-none" />
 		</div>
-		<div class="my-2 flex w-[50%] flex-col px-4">
+		<div class="rt-control">
 			<DropDown tool={$tool} label="Quote symbol" list={quoteSymbolDropDown} />
 		</div>
-		<div class="my-2 flex w-[50%] flex-col px-4">
-			<label for="quote-text-size" class="my-1 text-sm font-semibold text-gray-500">Text size</label
-			>
-			<input
-				type="number"
-				name="quote-text-size"
-				id="quote-text-size"
-				class="bg-gray-5 max-w-[8rem] rounded border-gray-200 py-[0.25rem] text-sm"
-			/>
+		<div class="rt-control">
+			<label for="quote-text-size" class="rt-label">Text size</label>
+			<input type="number" name="quote-text-size" id="quote-text-size" class="rt-input" />
 		</div>
-		<div class="my-2 flex w-[50%] flex-col px-4">
+		<div class="rt-control">
 			<ColorPicker tool={$tool} label="Text color" />
 		</div>
-		<div class="my-2 flex w-[50%] flex-col px-4">
+		<div class="rt-control">
 			<ColorPicker tool={$tool} label="Background color" />
 		</div>
-		<div class="my-2 flex w-[50%] flex-col px-4">
+		<div class="rt-control">
 			<ColorPicker tool={$tool} label="Quote symbol color" />
 		</div>
 	</fieldset>
