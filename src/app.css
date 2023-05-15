@@ -2,7 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* prefix all settings specific custom classes with `rt-` (for riga-tool) */
 @layer components {
+	/* Settings component classes */
+	.rt-form {
+		@apply relative font-skolar-sans;
+	}
+	.rt-fieldset {
+		@apply my-4 flex flex-wrap;
+	}
+	.rt-legend {
+		@apply w-full border-y border-gray-300 bg-gray-25 px-4 py-2 font-semibold;
+	}
+	.rt-control {
+		@apply my-2 flex w-1/2 flex-col px-4;
+	}
+	.rt-label {
+		@apply my-1 text-sm font-semibold text-gray-500;
+	}
+	.rt-input {
+		@apply max-w-[8rem] rounded border-gray-200 bg-gray-5 py-[0.25rem] text-sm;
+	}
+
+	/* TODO only keep necessary classes*/
 	h1 {
 		@apply my-3 text-lg font-bold;
 	}
