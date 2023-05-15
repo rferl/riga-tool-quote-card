@@ -38,10 +38,7 @@
 	</fieldset>
 </form>
 
-<!-- 
-	You can build out inputs directly in the settings component 
-	or you can use pre-defined input components.
-	For uniqe element attributes (id, name, for) use the utility 
-	`getID($tool, label)`. In order for this to work, set the `tool` 
-	readable in src/lib/stores/index.ts
--->
+<!-- You can 
+	 - use pre-built `default-settings` components
+	 - build your own `custom-settings` components 
+	 - or build settings directly in here (within an `.rt-setting` wrapper div) -->

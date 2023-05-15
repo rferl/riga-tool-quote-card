@@ -23,33 +23,6 @@
 	.rt-input {
 		@apply max-w-[8rem] rounded border-gray-200 bg-gray-5 py-[0.25rem] text-sm;
 	}
-
-	/* TODO only keep necessary classes*/
-	h1 {
-		@apply my-3 text-lg font-bold;
-	}
-	.btn-base {
-		@apply mx-2 rounded-lg border border-gray-100 bg-gradient-to-tr px-4 py-1 shadow-md transition hover:scale-102 hover:shadow-lg active:shadow-sm;
-	}
-	.search-base {
-		@apply w-[200px] rounded-md border border-gray-300 bg-white px-4 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 sm:text-sm;
-	}
-	.search-base-orange {
-		@apply search-base focus:border-orange-riga-50 focus:ring-orange-riga-50;
-	}
-	.search-base-blue {
-		@apply search-base focus:border-blue-riga-50 focus:ring-blue-riga-50;
-	}
-	.title-base {
-		@apply w-5/6 border-0 p-2 text-gray-500 placeholder:text-gray-400 focus:shadow-[0px_1px_0px_#ccc] focus:outline-none focus:ring-0  lg:w-1/2;
-	}
-	.btn-table-action {
-		@apply w-full py-2 pl-2 pr-4 text-left hover:bg-blue-riga-15 hover:text-black;
-	}
-	.text-shadow {
-		/* Text-shadow not implemented in tailwind */
-		text-shadow: 1px 1px 4px #ccc;
-	}
 }
 
 @layer base {
