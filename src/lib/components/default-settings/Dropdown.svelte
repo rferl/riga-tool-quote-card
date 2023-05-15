@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getID } from '../utils/index.js';
+	import { getID } from '../../utils/index.js';
 
 	type DropdownOption = {
 		value: string;
