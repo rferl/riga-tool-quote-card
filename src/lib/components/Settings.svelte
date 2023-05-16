@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ColorPicker from './default-settings/ColorPicker.svelte';
-	import DropDown from './default-settings/Dropdown.svelte';
+	import ColorPicker from './controls/ColorPicker.svelte';
+	import DropDown from './controls/Dropdown.svelte';
 	import { tool } from '../stores/index.js'; // Required for unique element id's
 
 	// Dropdown data.
@@ -16,7 +16,7 @@
 	<fieldset class="rt-fieldset">
 		<legend class="rt-legend">Card Settings</legend>
 		<div class="rt-setting w-full">
-			<label for="quote-text" class="rt-label">Quote text</label>
+			<label for="quote-text" class="rt-label">Quote blurb</label>
 			<textarea name="quote-text" id="quote-text" cols="10" rows="3" class="rt-input max-w-none" />
 		</div>
 		<div class="rt-setting">
