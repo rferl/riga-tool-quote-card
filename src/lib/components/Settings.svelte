@@ -15,7 +15,7 @@
 	<fieldset class="rt-fieldset">
 		<legend class="rt-legend">Card Settings</legend>
 		<div class="rt-setting w-full">
-			<label for="quote-text" class="rt-label">Quote blurb</label>
+			<label for="quote-text" class="rt-label">Quote text</label>
 			<textarea name="quote-text" id="quote-text" cols="10" rows="3" class="rt-input max-w-none" />
 		</div>
 		<div class="rt-setting">
