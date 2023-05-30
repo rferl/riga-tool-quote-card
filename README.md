@@ -1,12 +1,167 @@
 # RIGA Quote Card
 
-Simple RIGA tool repo.
+Base repo for building a RIGA tool **Settings component** as well as - optionally - a **tool frontend**.
 
-- SvelteKit based
-- Typescipt
-- Library option (see [here](https://kit.svelte.dev/docs/packaging))
+## Background
+
+The RIGA editor provides a list of base tools that can be configured to work in a specific way. For example, a quote card tool can be configured with three settings to show specific quote text, in a specific font-size of a specific color. Tool instance creators can configure settings in the RIGA editor's Settings UI (**TODO link**). This UI or rather UI component can be built with the help of this repo. To do so you would typically:
+
+1. Define the settings your RIGA tool needs
+2. Build these settings out as controls in a Svelte component
+3. Expose your Svelte component in a component library (with just that single Settings component)
+
+As the RIGA editor is also a Svelte app your Settings component can now be installed easily in the [RIGA editor repo](https://github.com/rferl/riga-editor) via npm and consumed by the editor.
+
+## Remit
+
+In technical terms, this repo is a pre-configured [SvelteKit library app](https://kit.svelte.dev/docs/packaging) (using Typescript) with all the pieces required to build and expose a Settings component:
+
+- a base `Settings.svelte` component
+- helper libraries
+- Settings styles and classes
+- other assets like fonts etc.
+- a script to build the (single) component library
+
+As an additional benefit, this repo provides a development environment to not only build but also view and test your Settings component during development.
+
+Additionally, in case your tool comes with a frontend (like in the quote-card example), you can also use this repo to build and expose the tool frontend. Both uses are described below.
+
+## Settings component
+
+### Quickstart
+
+1. Clone the repo
+2. In `package.json` set the `name` to your tool's name prefixed with `riga-` (eg. `riga-quote-card`)
+3. Run `npm run dev` for development
+4. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
+5. Once you're happy with your component run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
+
+### Writing Settings component
+
+Some general and hopefully helpful notes and pointers when writing your Settings component (step 4 above):
+
+#### Layout
+
+Each Settings component is a `form` element with one or more `fieldset` elements representing different setting blocks containing individual settings. Here's the Settings "anatomy" showing all 6 core elements, their HTML tags and pre-defined CSS classes:
+
+<img src='https://i.ibb.co/cwcK0nG/Settings-anatomy.jpg' width='100%'>
+
+See `src/lib/components/Settings.svelte` for a base implementation in code.
+
+#### How to write a setting?
+
+You can write vanilla HTML if you for example want to add a simple input with a label.
+
+Alternatively, you can use a set of predefined components for common controls like dropdowns or color picker living in `src/lib/components/controls`.
+
+Lastly, you can write your own components.
+
+**TODO Note, for now helper components are stored in the repo, but will ultimately move into their own library, the tool repo will load.**
+
+#### CSS
+
+In order to maintain consistent styling across all the different Tool's Settings UI components in the RIGA editor, please use only predefined CSS classes.
+
+We're using [Tailwind](https://tailwindcss.com/docs) for all settings CSS and all pre-defined classes can be found in `/src/app.css`. Please don't change these classes as they are in sync with the editor where they will be applied once installed.
+
+#### How to control the setting's layout?
+
+You can control the layout and dimensions of your individual settings or setting blocks:
+
+- You can control the **position** of the setting wrapper `.rt-setting` by simply choosing which comes first, second, third, etc.
+
+- You can also control the **width** of the setting **wrapper** (`.rt-setting`). The default width is `w-1/2` (50% of the available space) but you can override this with any [tailwind width class](https://tailwindcss.com/docs/width) on the wrapper div, e.g.:
+
+  ```html
+  <div class="rt-setting w-full"></div>
+  ```
+
+- You can control the **width** of each input **element** (`.rt-input`). The default is `max-w-[8rem]` but you can override this with any [tailwind width class](https://tailwindcss.com/docs/width) on the wrapper div, e.g.:
+  ```html
+  <textarea class="rt-input max-w-none" />
+  ```
+
+#### How to view a setting?
+
+Run `npm run dev` to view your changes on the dev server.
+
+#### Utilities
+
+For unique element attributes (`id`, `name`, `for`, ...) you can use the utility function `setID()`. This is entirely up to you but might be helpful. Example usage in the `Dropdown` component:
+
+```html
+<script lang="ts">
+	import { setID } from '../../utils/index.js';
+
+	// Set the id to be used in the HTML below.
+	const id = setID; // `id` might be e.g. `rt-7Hji97tX`
+</script>
+
+<!-- Use the unique id for the label's `for` attribute -->
+<label for="{id}" class="rt-label">{label}</label>
+
+<!-- ...other elements... -->
+```
+
+## Tool Frontend
+
+All RIGA tools are assumed to have settings. Some tools might be backend only services, some might come with a rendered UI. Both, the tool's potential backend and frontend, are consciously decoupled from the Settings component, so the UI for example doesn't have to be a Svelte component to allow maximum flexibility and integration of separately built tools.
+
+However, if you're building a UI based tool you can use this repo as a development environment - it might even make sense :))
+
+### Quickstart
+
+1. Create a new route in `src/routes` by adding a new directory (using SvelteKit's [file-system based routing](https://kit.svelte.dev/docs/routing))
+
+2. Name it accordingly e.g. `src/routes/my-tool-name`
+
+3. In the directory add two files:
+
+   - a `+page.svelte` file (this will have your tool's frontend code)
+
+   - a `+layout.ts` file just including the line:
+
+     ```js
+     export const prerender = true;
+     ```
+
+     ...so the build script knows to build this route as a static site bundle.
+
+4. Build your tool in `+page.svelte`
+
+5. Once you're happy with your tool, you can compile it to the `./build` folder with `npm run build`
+
+**TODO this folder might get the name of the tool and we might want to call the file `index.html`**
+
+### Writing your tool's frontend
+
+Some notes for writing your tool's UI as part of the base tool repo (step 4 above):
+
+#### How can I view my tool?
+
+Run `npm run dev` to view your changes on the dev server at the route you've created. If your tool lives at `src/routes/my-tool-name` you can view your progress on `http://localhost:5173/my-tool-name` (the port `5173` can vary).
+
+#### What happens when I build my tool?
+
+When you build your tool's frontend with `npm run build` SvelteKit will compile your svelte site at `+page.svelte` to a static site into the `./build` directory.
+
+The entry HTML file of the created static site will be named after the given route name, so the route name `src/routes/my-tool-name` will translate to `my-tool-name.html`.
+
+**TODO consider and explain what happens next and how it gets pulled into the editor and revise above accordingly**
+
+#### Can I use Svelte when writing my tool?
+
+Yes. You can write vanilla HTML but it seems prudent to use Svelte if you choose to build your tool in this SvelteKit repo. Ideally you keep within the route directory for all components, stores and utilities you might be using to keep these separate from the Settings component using the home route and the `src/lib` structure.
+
+**TODO all static files are being copied over to each static build folder. Consider ramifications and solutions (there's also a chat transcript in `RFE | chats.md` on this)**
+
+**TODO add big note that settings fetch is required**
 
 ## Dependencies and assets
+
+This is a collection of libs and assets used in this repo.
+
+**TODO revise this**
 
 ### Tailwind [&#9781;](https://tailwindcss.com/) [&#9782;](https://tailwindcss.com/docs/guides/sveltekit)
 
