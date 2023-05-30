@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { getID } from '../../utils/index.js';
+	import { setID } from '../../utils/index.js';
 
 	type DropdownOption = {
 		value: string;
 		label: string;
 	};
 
-	export let tool: string; // required for unique element id's
 	export let label: string = 'Dropdown';
 	export let list: DropdownOption[] = [
 		{ value: 'one', label: 'one' },
@@ -14,7 +13,7 @@
 	];
 
 	// Required for unique element id's:
-	const id = getID(tool, label);
+	const id = setID();
 </script>
 
 <label for={id} class="rt-label">{label}</label>

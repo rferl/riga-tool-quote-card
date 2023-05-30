@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getID } from '../../utils/index.js';
+	import { setID } from '../../utils/index.js';
 
-	export let tool: string; // required for unique element id's
 	export let label: string = 'Label';
 
 	// Required for unique element id's:
-	const id = getID(tool, label);
+	const id = setID();
 
 	let color: string = '#cccccc';
 	let hexInput = '';

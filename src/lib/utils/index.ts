@@ -15,6 +15,13 @@ export function slugify(string: string): string {
     .replace(/-+\$/, ''); // Trim - from end of text
 }
 
-export function getID(baseID: string, label: string): string {
-  return slugify(`${baseID}-${label}`)
+export function setID(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let prefix = 'rt-';
+
+  for (let i = 0; i < 8; i++) {
+    prefix += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  return prefix;
 }
