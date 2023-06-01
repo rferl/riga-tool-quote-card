@@ -15,7 +15,10 @@ const config = {
 		// and set `strict` (== prerender all pages) to `false` here.
 		adapter: adapter({
 			strict: false
-		})
+		}),
+		alias: {
+			'$types': './src/types',
+		}
 	}
 };
 

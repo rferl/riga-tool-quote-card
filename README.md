@@ -31,9 +31,13 @@ Additionally, in case your tool comes with a frontend (like in the quote-card ex
 ### Quickstart
 
 1. Clone the repo
+
 2. In `package.json` set the `name` to your tool's name prefixed with `riga-` (eg. `riga-quote-card`)
+
 3. Run `npm run dev` for development
+
 4. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
+
 5. Once you're happy with your component run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
 
 ### Writing Settings component
@@ -81,9 +85,33 @@ You can control the layout and dimensions of your individual settings or setting
   <textarea class="rt-input max-w-none" />
   ```
 
-#### How to view a setting?
+#### How to view your settings component?
 
 Run `npm run dev` to view your changes on the dev server.
+
+#### How to update the settings data?
+
+The Settings's core task is to capture settings a user will set or change via the component's inputs.
+
+The capturing mechanic is straight forward. The Settings component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) which can be updated on input change. For example:
+
+```html
+<script>
+	// The settings store passed in by the Editor:
+	export let settings;
+</script>
+
+<!-- Update the values for the settings' `font_size` property -->
+<input name="font-size" bind:value="{$settings.font_size}" />
+```
+
+When using predefined components, pass the `settings` store and the property name to update:
+
+```html
+<DropDown settings={settings} setting={'font_size'} //... />
+```
+
+_See the [Settings component implementation](./src/lib/components/Settings.svelte) for a complete implementation across multiple inputs._
 
 #### Utilities
 

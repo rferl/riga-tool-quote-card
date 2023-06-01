@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Settings from '$lib/components/Settings.svelte';
+	import SettingsWrap from '$lib/components/wrap/SettingsWrap.svelte';
 	import { onMount } from 'svelte';
 
 	// This is a temporary editor markup. Ultimately we want to have the
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div class="w-5/6 border border-gray-100 shadow-xl md:w-2/5">
-			<Settings />
+			<SettingsWrap />
 		</div>
 	</div>
 </div>
