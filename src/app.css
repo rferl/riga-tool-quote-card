@@ -23,6 +23,11 @@
 	.rt-input {
 		@apply max-w-[8rem] rounded border-gray-200 bg-gray-5 py-[0.25rem] text-sm;
 	}
+
+	/* Other classes (not used for Settings) */
+	.btn-base {
+		@apply mx-2 rounded-lg border border-gray-100 bg-gradient-to-tr px-4 py-1 shadow-md transition hover:scale-102 hover:shadow-lg active:shadow-sm;
+	}
 }
 
 @layer base {
