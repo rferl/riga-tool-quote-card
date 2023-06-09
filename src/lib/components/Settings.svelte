@@ -1,12 +1,16 @@
 <!-- This is the Settings component written by the tool developer. -->
 
 <script lang="ts">
-	import type { SettingsWritable } from '$types/index.js';
+	// TODO: load types from an external lib both the
+	// editor and the riga settings component can access
+
+	// import type { SettingsWritable } from '$types/index.js';
 	import ColorPicker from './controls/ColorPicker.svelte';
 	import DropDown from './controls/Dropdown.svelte';
 
 	// `settings` data as only component prop.
-	export let settings: SettingsWritable;
+	// export let settings: SettingsWritable;
+	export let settings: any;
 
 	// You can (but don't have to) init your values here. Note that if you do
 	// previously stored settings on `$settings` will be overwritten.
