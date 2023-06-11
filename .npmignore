@@ -1,0 +1,3 @@
+# Add dirs/files you don't want to npm publish here 
+# (note it will still be added to `/dist`)
+dist/components/wrap/
