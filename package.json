@@ -23,7 +23,8 @@
 		"dist",
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*",
-		"build"
+		"build",
+		"riga-tool.config.json"
 	],
 	"peerDependencies": {
 		"svelte": "^3.54.0"
@@ -52,6 +53,7 @@
 		"vite": "^4.3.9",
 		"vitest": "^0.25.3"
 	},
+	"main": "./dist/index.js",
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"type": "module"

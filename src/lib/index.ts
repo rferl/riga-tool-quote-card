@@ -1,6 +1,4 @@
-import Settings from './components/Settings.svelte';
+import type { SettingsWritable } from '$types/index.js'
 
-// Reexport your entry components here
-export default {
-  settings: Settings,
-}
+export { default as Settings} from './components/Settings.svelte';
+export type { SettingsWritable }
