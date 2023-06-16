@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
 /build
-/dist
 /.svelte-kit
 /package
 .env
@@ -9,3 +8,7 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# /dist can be gitignored when npm installed (as covered by package.json's `files` array)
+# but should NOT be gitignored when git+ssh installed.
+# /dist 
