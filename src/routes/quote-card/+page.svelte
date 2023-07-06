@@ -5,6 +5,7 @@
 	let settings = {};
 
 	async function getSettings() {
+		// This is where the API call will happen. Currently data hardcoded in the /static folder
 		const response = await fetch('/settings/quote-card.json');
 		// const response = await fetch(
 		// 	'https://func-inno-prod-riga-api.azurewebsites.net/api/tools/f58d04b8-ace2-492c-b1a9-01ae74c1b95b'
