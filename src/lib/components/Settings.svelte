@@ -1,6 +1,13 @@
 <!-- This is the Settings component written by the tool developer. -->
 
 <script lang="ts">
+	// Helper funcs
+	function decodeHtml(html) {
+		var txt = document.createElement('textarea');
+		txt.innerHTML = html;
+		return txt.value;
+	}
+
 	// TODO: load types from an external lib both the
 	// editor and the riga settings component can access
 
@@ -18,9 +25,10 @@
 
 	// Dropdown data.
 	const quoteSymbolDropDown = [
-		{ value: '&quot;', label: 'Standard double quotes ("")' },
-		{ value: '&lsquo;&rsquo;', label: 'Single curly quotes (‘’)' },
-		{ value: '&ldquo;&rdquo;', label: 'Double curly quotes (“”)' }
+		{ value: '&#10078;', label: decodeHtml('&#10078;') },
+		{ value: '&#10077;', label: decodeHtml('&#10077;') },
+		{ value: '&#10076;', label: decodeHtml('&#10076;') },
+		{ value: '&#10075;', label: decodeHtml('&#10075;') }
 	];
 </script>
 
