@@ -1,6 +1,7 @@
 <!-- Typescript can be used here, but don't have to be as tool UI's are decoupled -->
 <script>
 	import { onMount } from 'svelte';
+	import './tool-global.css';
 
 	let settings = {};
 	let loading = true;
@@ -34,34 +35,33 @@
 </script>
 
 <!-- Mimicking the iframe during dev - will go  -->
-<div id="iframe-double">
-	<!-- A wrapper div for the tool UI to adapt to the parent's dimensions -->
-	<div id="wrap">
-		<!-- The actual tool ui (only showing when data is loaded)-->
-		{#if !loading}
-			<div id="tool-ui" style="background-color: {settings.background_color}">
-				<div id="quote-symbol" style="color: {settings.quote_symbol_color}">
-					{@html settings.quote_symbol}
-				</div>
-				<div
-					id="quote-text"
-					style="font-size: {settings.text_size}rem; color: {settings.text_color}"
-				>
-					{settings.quote_text}
-				</div>
+<!-- <div id="iframe-double"> -->
+<!-- A wrapper div for the tool UI to adapt to the parent's dimensions -->
+<div id="wrap">
+	<!-- The actual tool ui (only showing when data is loaded)-->
+	{#if !loading}
+		<div id="tool-ui" style="background-color: {settings.background_color}">
+			<div id="quote-symbol" style="color: {settings.quote_symbol_color}">
+				{@html settings.quote_symbol}
 			</div>
-		{/if}
-	</div>
+			<div id="quote-text" style="font-size: {settings.text_size}rem; color: {settings.text_color}">
+				{settings.quote_text}
+			</div>
+		</div>
+	{/if}
 </div>
+
+<!-- </div> -->
 
 <style>
 	/* This would come from the iframe */
-	#iframe-double {
+	/* #iframe-double {
 		width: 70%;
 		height: 400px;
 		margin: 4rem auto;
 		outline: 1px solid #ccc;
 	}
+ */
 
 	/* Typical setting for the outer wrapper div to 
 			track the iframe's dimensions */
