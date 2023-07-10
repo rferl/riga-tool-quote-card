@@ -1,5 +1,8 @@
 {
-	"quote_text": "I am a quote",
-	"text_color": "#cccccc",
-	"text_size": 1
+	"quote_text": "One day in Teletubbyland, it was time to make Tubby Custard.",
+	"quote_symbol": "&#10078;",
+	"quote_text_size": 3,
+	"quote_text_color": "#666",
+	"quote_symbol_color": "#f0f0f0",
+	"quote_background_color": "#fcfcfc"
 }
