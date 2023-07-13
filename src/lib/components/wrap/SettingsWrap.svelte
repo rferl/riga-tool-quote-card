@@ -9,7 +9,8 @@
 
 	// `settings` can but don't have to be value initialised.
 	const settings: SettingsWritable = writable({
-		quote_text: 'I am a quote'
+		quote_text: 'I am a quote',
+		quote_text_size: 5
 	});
 
 	function save() {

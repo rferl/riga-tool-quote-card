@@ -6,12 +6,20 @@
 
 	async function getSettings() {
 		const response = await fetch('/settings/quote-card.json');
+		// const response = await fetch(
+		// 	'https://func-inno-prod-riga-api.azurewebsites.net/api/tools/f58d04b8-ace2-492c-b1a9-01ae74c1b95b'
+		// );
 		if (!response.ok) {
 			console.error('Error fetching quote-card.json:', response.status, response.statusText);
 			return {};
 		}
 		return await response.json();
 	}
+
+	// function getId() {
+	// 	// TODO: Get ID from URL to pass into fetch request
+	// 	// window.location
+	// }
 
 	onMount(() => {
 		(async () => {
