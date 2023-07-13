@@ -1,6 +1,6 @@
 name: 'Quote Card'
 slug: 'quote_card'
-type: 'Editorial'
+category: 'Editorial'
 component: 'Settings'
 package_name: 'riga-tool-quote-card'
 image: 'https://i.ibb.co/JkdZrXj/Blueprint-0.jpg'
