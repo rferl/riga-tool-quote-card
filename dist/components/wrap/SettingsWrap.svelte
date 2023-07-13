@@ -5,7 +5,8 @@
 <script>import Settings from "../Settings.svelte";
 import { writable } from "svelte/store";
 const settings = writable({
-  quote_text: "I am a quote"
+  quote_text: "I am a quote",
+  quote_text_size: 5
 });
 function save() {
   const settings_json = {};
