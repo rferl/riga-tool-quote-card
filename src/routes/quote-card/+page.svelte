@@ -17,8 +17,6 @@
 		return uuid ?? null;
 	}
 
-	// This is where the API call will happen. Currently data
-	// hardcoded in the /static folder
 	async function getSettings(id) {
 		// Couple of options to get the data:
 		// (1) Get the data from the hardcoded test data

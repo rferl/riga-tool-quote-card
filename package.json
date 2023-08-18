@@ -1,6 +1,6 @@
 {
 	"name": "riga-tool-quote-card",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"scripts": {
 		"predev": "npm run generateConfig",
 		"prebuild": "npm run generateConfig",
