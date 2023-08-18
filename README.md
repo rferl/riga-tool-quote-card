@@ -167,7 +167,13 @@ Some notes for writing your tool's UI as part of the base tool repo (step 4 abov
 
 #### How can I view my tool?
 
-Run `npm run dev` to view your changes on the dev server at the route you've created. If your tool lives at `src/routes/my-tool-name` you can view your progress on `http://localhost:5173/my-tool-name` (the port `5173` can vary).
+Running `npm run dev` enables you to view your tool UI in two different locations.
+
+You can see your changes _live_ and in a _full screen_ preview at the tool's route. For instance, if your tool is located at `src/routes/my-tool-name`, you can monitor your progress at `http://localhost:5173/my-tool-name` (note that port `5173` may vary).
+
+Alternatively, you can view it at the home route, such as `http://localhost:5173`. This option lets you see your UI within the _preview pane_, adjacent to the settings panel. The preview pane is an iframe that points to the `url` value specified in the `riga-tool.config.yml` file. During development, you can set your `url` to your tool's localhost URL, for example, `http://localhost:5173/my-tool-name`.
+
+**TODO: check if there are advantages of using the local vs. the final URL. For now it seems the local URL seems the best as it updates immediately and without deploy. But there might be further considerations?**
 
 #### What happens when I build my tool?
 

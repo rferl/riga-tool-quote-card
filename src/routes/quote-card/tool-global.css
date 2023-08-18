@@ -1,0 +1,8 @@
+/* This CSS makes sure that the tool UI takes on 
+   the dimensions of the wrapper iframe/div */
+html,
+body,
+body > div {
+	height: 100%;
+	position: relative;
+}
