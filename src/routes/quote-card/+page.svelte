@@ -9,11 +9,11 @@
 	let id = null;
 	let loading = true;
 
-	const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
-
 	function getId() {
-		const pathname = window.location.pathname;
-		const uuid = pathname.match(uuidRegex);
+		// The tool instance id will be passed through as URL param
+		// of the iframe source which we fetch here.
+		const urlParams = new URLSearchParams(window.location.search);
+		const uuid = urlParams.get('instance_id');
 		return uuid ?? null;
 	}
 
