@@ -5,34 +5,48 @@
 	import { onMount } from 'svelte';
 	import './tool-global.css';
 
-	let settings = {};
+	let settings = null;
+	let id = null;
 	let loading = true;
 
-	// function getId() {
-	// 	// TODO: Get ID from URL to pass into fetch request
-	// 	// window.location
-	// }
+	const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
+
+	function getId() {
+		const pathname = window.location.pathname;
+		const uuid = pathname.match(uuidRegex);
+		return uuid ?? null;
+	}
 
 	// This is where the API call will happen. Currently data
 	// hardcoded in the /static folder
 	async function getSettings(id) {
-		const response = await fetch('/settings/quote-card.json');
-		// Get the data with the passed in ID
-		// const response = await fetch(
-		// 	'https://func-inno-prod-riga-api.azurewebsites.net/api/tools/f58d04b8-ace2-492c-b1a9-01ae74c1b95b'
-		// );
+		// Couple of options to get the data:
+		// (1) Get the data from the hardcoded test data
+		// const response = await fetch('/settings/quote-card.json');
+		// (2) Get the data with a simple fetch (not working with strict CORS)
+		const response = await fetch(
+			`https://func-inno-prod-riga-api.azurewebsites.net/api/tools/${id}`
+		);
+
+		// Results for (1) and (2)
 		if (!response.ok) {
 			console.error('Error fetching quote-card.json:', response.status, response.statusText);
-			return {};
+			return null;
 		}
-		return await response.json();
+		const responseData = await response.json();
+
+		return responseData?.tool?.settings ?? null;
 	}
 
 	onMount(() => {
 		(async () => {
-			settings = await getSettings();
-			console.log(settings);
+			id = getId();
+			// id = '64b75565-f0b1-49c4-a77a-44f22040e42d';
+			settings = await getSettings(id);
 			loading = false;
+
+			console.log(id);
+			console.log(settings);
 		})();
 	});
 </script>
@@ -41,17 +55,23 @@
 <div id="wrap">
 	<!-- The actual tool ui (only showing when data is loaded)-->
 	{#if !loading}
-		<div id="tool-ui" style="background-color: {settings.quote_background_color}">
-			<div id="quote-symbol" style="color: {settings.quote_symbol_color}">
-				{@html settings.quote_symbol}
+		{#if !id}
+			<div class="note">Can't find a valid uuid in the the pathname</div>
+		{:else if !settings}
+			<div class="note">Sorry, can't find any settings for uuid {id}</div>
+		{:else}
+			<div id="tool-ui" style="background-color: {settings.quote_background_color}">
+				<div id="quote-symbol" style="color: {settings.quote_symbol_color}">
+					{@html settings.quote_symbol}
+				</div>
+				<div
+					id="quote-text"
+					style="font-size: {settings.quote_text_size}rem; color: {settings.quote_text_color}"
+				>
+					{settings.quote_text}
+				</div>
 			</div>
-			<div
-				id="quote-text"
-				style="font-size: {settings.quote_text_size}rem; color: {settings.quote_text_color}"
-			>
-				{settings.quote_text}
-			</div>
-		</div>
+		{/if}
 	{/if}
 </div>
 
@@ -66,6 +86,11 @@
 	}
 
 	/* Tool UI specific settings */
+	.note {
+		margin: 1rem;
+		color: #aaa;
+	}
+
 	#tool-ui {
 		height: 100%;
 		padding-left: 15%;
