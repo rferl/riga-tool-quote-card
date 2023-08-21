@@ -5,16 +5,16 @@
 	import { onMount } from 'svelte';
 	import './tool-global.css';
 
+	let id = '';
 	let settings = null;
-	let id = null;
 	let loading = true;
 
 	function getId() {
 		// The tool instance id will be passed through as URL param
 		// of the iframe source which we fetch here.
 		const urlParams = new URLSearchParams(window.location.search);
-		const uuid = urlParams.get('instance_id');
-		return uuid ?? null;
+		const toolInstanceId = urlParams.get('tiid');
+		return toolInstanceId || '';
 	}
 
 	async function getSettings(id) {
@@ -54,9 +54,9 @@
 	<!-- The actual tool ui (only showing when data is loaded)-->
 	{#if !loading}
 		{#if !id}
-			<div class="note">Can't find a valid uuid in the the pathname</div>
+			<div class="note">Can't find a valid toolInstanceId in the pathname</div>
 		{:else if !settings}
-			<div class="note">Sorry, can't find any settings for uuid {id}</div>
+			<div class="note">Sorry, can't find any settings for toolInstanceId "{id}""</div>
 		{:else}
 			<div id="tool-ui" style="background-color: {settings.quote_background_color}">
 				<div id="quote-symbol" style="color: {settings.quote_symbol_color}">
