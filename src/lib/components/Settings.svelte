@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import ColorPicker from './controls/ColorPicker.svelte';
 	import DropDown from './controls/Dropdown.svelte';
+	import config from '../../riga-tool.config.js';
 	// TODO: load types from an external lib both the
 	// editor and the riga settings component can access
 
@@ -19,16 +20,9 @@
 	// export let settings: SettingsWritable;
 	export let settings: any;
 
-	// Define all default settings here. Passed in settings
-	// will overwrite default settings.
-	const defaultSettings = {
-		quote_text: 'Hello',
-		quote_symbol: '&#10078;',
-		quote_text_size: 3,
-		quote_text_color: '#666666',
-		quote_symbol_color: '#f0f0f0',
-		quote_background_color: '#fcfcfc'
-	};
+	// Define default settings in config yaml. Passed in settings
+	// will overwrite these default settings.
+	const defaultSettings = config.settings;
 
 	// Use isLoaded in conjunction with the settings
 	// merge to wait for the render.
