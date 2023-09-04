@@ -20,11 +20,11 @@ In technical terms, this repo is a pre-configured [SvelteKit library app](https:
 - helper libraries
 - Settings styles and classes
 - other assets like fonts etc.
-- a script to build the (single) component library
+- a configuration YAML file
 
 As an additional benefit, this repo provides a development environment to not only build but also view and test your Settings component during development.
 
-Additionally, in case your tool comes with a frontend (like in the quote-card example), you can also use this repo to build and expose the tool frontend. Both uses are described below.
+Furthermore, in case your tool comes with a frontend (like in the quote-card example), you can also use this repo to build and expose the tool frontend. Both uses are described below.
 
 ## Settings component
 
@@ -34,15 +34,51 @@ Additionally, in case your tool comes with a frontend (like in the quote-card ex
 
 2. In `package.json` set the `name` to your tool's name prefixed with `riga-` (eg. `riga-quote-card`)
 
-3. Run `npm run dev` for development
+3. Populate the `riga-tool.config.yml` (see below for details)
 
-4. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
+4. Run `npm run dev` for development
 
-5. Once you're happy with your component run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
+5. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
+
+6. Once you're happy with your component run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
 
 ### Writing Settings component
 
-Some general and hopefully helpful notes and pointers when writing your Settings component (step 4 above):
+Some general and hopefully helpful notes and pointers when writing your Settings component (step 5 above):
+
+#### Location and name
+
+Your Settings component lives in `/src/lib/components` and needs to be called `Settings.svelte`.
+
+#### Configuration
+
+Each Settings component repo requires a `riga-tool.config.yml` configuration file which will be the base for the editor's tool registry. The file holds the following properties:
+
+| Property <type>                  | Required | Description                                                                  |
+| -------------------------------- | -------- | ---------------------------------------------------------------------------- |
+| `name <string>`                  | ✓        | the human readable name of the tool                                          |
+| `slug <string>`                  | ✓        | lower case machine readable slug `[a-z0-9]` with `_` for spaces              |
+| `category <string>`              | ✓        | human readable tool category (like _Editorial_, _Data viz_, ...)             |
+| `package_name <string>`          | ✓        | the name of your repository as per `package.json` starting with `riga-tool-` |
+| `image <string>`                 | ✓        | image URL of the image to be displayed on the tool's card in the editor      |
+| `url <string>`                   |          | the URL the tool UI is hosted at                                             |
+| `settings <string \| number {}>` |          | default settings using either strings or number values (example below)       |
+
+```
+# settings example:
+
+settings:
+  quote_text: 'Hello'
+  quote_symbol: '&#10078;'
+  quote_text_size: 3
+  quote_text_color: '#666666'
+  quote_symbol_color: '#f0f0f0'
+  quote_background_color: '#fcfcfc'
+```
+
+The configuration files of each editor installed tool are the base for the editor's tool registry.
+
+**TODO: check if all properties above are still correct**
 
 #### Layout
 
@@ -52,7 +88,7 @@ Each Settings component is a `form` element with one or more `fieldset` elements
 
 See `src/lib/components/Settings.svelte` for a base implementation in code.
 
-#### How to write a setting?
+#### How to write a single setting?
 
 You can write vanilla HTML if you for example want to add a simple input with a label.
 
@@ -93,7 +129,7 @@ Run `npm run dev` to view your changes on the dev server.
 
 The Settings's core task is to capture settings a user will set or change via the component's inputs.
 
-The capturing mechanic is straight forward. The Settings component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) which can be updated on input change. For example:
+The capturing mechanic is straight forward. The Settings component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) from the editor it gets load into. This settings store can be updated on input change. For example:
 
 ```html
 <script>
