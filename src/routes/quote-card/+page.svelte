@@ -33,18 +33,16 @@
 		}
 		const responseData = await response.json();
 
-		return responseData?.tool?.settings ?? null;
+		// return responseData ?? null; // (1)
+		return responseData?.tool?.settings ?? null; // (2)
 	}
 
 	onMount(() => {
 		(async () => {
 			id = getId();
-			// id = '64b75565-f0b1-49c4-a77a-44f22040e42d';
+			// id = '64b75565-f0b1-49c4-a77a-44f22040e42d'; // test ID
 			settings = await getSettings(id);
 			loading = false;
-
-			console.log(id);
-			console.log(settings);
 		})();
 	});
 </script>
@@ -54,8 +52,10 @@
 	<!-- The actual tool ui (only showing when data is loaded)-->
 	{#if !loading}
 		{#if !id}
+			<!-- {#if false} -->
 			<div class="note">Can't find a valid toolInstanceId in the pathname</div>
 		{:else if !settings}
+			<!-- {:else if false} -->
 			<div class="note">Sorry, can't find any settings for toolInstanceId "{id}""</div>
 		{:else}
 			<div id="tool-ui" style="background-color: {settings.quote_background_color}">

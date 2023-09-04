@@ -16,7 +16,7 @@
 		return txt.value;
 	}
 
-	// `settings` data as only component prop.
+	// `settings` store as only component prop.
 	// export let settings: SettingsWritable;
 	export let settings: any;
 
