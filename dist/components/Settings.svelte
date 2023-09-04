@@ -3,6 +3,7 @@
 <script>import { onMount } from "svelte";
 import ColorPicker from "./controls/ColorPicker.svelte";
 import DropDown from "./controls/Dropdown.svelte";
+import config from "../../riga-tool.config.js";
 function decodeHtml(html) {
   if (typeof document === "undefined")
     return html;
@@ -11,14 +12,7 @@ function decodeHtml(html) {
   return txt.value;
 }
 export let settings;
-const defaultSettings = {
-  quote_text: "Hello",
-  quote_symbol: "&#10078;",
-  quote_text_size: 3,
-  quote_text_color: "#666666",
-  quote_symbol_color: "#f0f0f0",
-  quote_background_color: "#fcfcfc"
-};
+const defaultSettings = config.settings;
 let isLoaded = false;
 onMount(async () => {
   $settings = { ...defaultSettings, ...$settings };
