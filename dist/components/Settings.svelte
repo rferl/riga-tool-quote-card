@@ -3,7 +3,7 @@
 <script>import { onMount } from "svelte";
 import ColorPicker from "./controls/ColorPicker.svelte";
 import DropDown from "./controls/Dropdown.svelte";
-import config from "../../riga-tool.config.js";
+import config from "./riga-tool.config.js";
 function decodeHtml(html) {
   if (typeof document === "undefined")
     return html;
