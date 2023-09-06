@@ -8,7 +8,6 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-# /src/riga-tool.config.ts
 
 # /dist can be gitignored when npm installed (as covered by package.json's 
 # `files` array) but should NOT be gitignored when git+ssh installed.

@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Loading the tool's config to control the hosted origin
-	import config from '../riga-tool.config.js';
+	import config from '$lib/components/riga-tool.config.js';
 	import SettingsWrap from '$lib/components/wrap/SettingsWrap.svelte';
 	import { onMount } from 'svelte';
 

@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import ColorPicker from './controls/ColorPicker.svelte';
 	import DropDown from './controls/Dropdown.svelte';
-	import config from '../../riga-tool.config.js';
+	import config from './riga-tool.config.js';
 	// TODO: load types from an external lib both the
 	// editor and the riga settings component can access
 
