@@ -28,7 +28,7 @@
 
 		// Results for (1) and (2)
 		if (!response.ok) {
-			console.error('Error fetching quote-card.json:', response.status, response.statusText);
+			console.error("Error fetching the tool's config json:", response.status, response.statusText);
 			return null;
 		}
 		const responseData = await response.json();

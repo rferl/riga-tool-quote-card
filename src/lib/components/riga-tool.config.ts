@@ -4,7 +4,7 @@ export default {
   "category": "Editorial",
   "package_name": "riga-editor-tool-quote-card",
   "image": "https://i.ibb.co/JkdZrXj/Blueprint-0.jpg",
-  "url": "http://localhost:5174/quote-card",
+  "url": "http://localhost:5174/index",
   "settings": {
     "quote_text": "Hello",
     "quote_symbol": "&#10078;",

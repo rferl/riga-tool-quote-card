@@ -177,7 +177,7 @@ However, if you're building a UI based tool you can use this repo as a developme
 
 1. Create a new route in `src/routes` by adding a new directory (using SvelteKit's [file-system based routing](https://kit.svelte.dev/docs/routing))
 
-2. Name it accordingly e.g. `src/routes/my-tool-name`
+2. Name it `src/routes/index`
 
 3. In the directory add two files:
 
@@ -195,8 +195,6 @@ However, if you're building a UI based tool you can use this repo as a developme
 
 5. Once you're happy with your tool, you can compile it to the `./build` folder with `npm run build`
 
-**TODO this folder might get the name of the tool and we might want to call the file `index.html`**
-
 ### Writing your tool's frontend
 
 Some notes for writing your tool's UI as part of the base tool repo (step 4 above):
@@ -205,9 +203,9 @@ Some notes for writing your tool's UI as part of the base tool repo (step 4 abov
 
 Running `npm run dev` enables you to view your tool UI in two different locations.
 
-You can see your changes _live_ and in a _full screen_ preview at the tool's route. For instance, if your tool is located at `src/routes/my-tool-name`, you can monitor your progress at `http://localhost:5173/my-tool-name` (note that port `5173` may vary).
+You can see your changes _live_ and in a _full screen_ preview at the tool's route. For instance, if your tool is located at `src/routes/index`, you can monitor your progress at `http://localhost:5173/index` (note that port `5173` may vary).
 
-Alternatively, you can view it at the home route, such as `http://localhost:5173`. This option lets you see your UI within the _preview pane_, adjacent to the settings panel. The preview pane is an iframe that points to the `url` value specified in the `riga-tool.config.yml` file. During development, you can set your `url` to your tool's localhost URL, for example, `http://localhost:5173/my-tool-name`.
+Alternatively, you can view it at the home route, such as `http://localhost:5173`. This option lets you see your UI within the _preview pane_, adjacent to the settings panel. The preview pane is an iframe that points to the `url` value specified in the `riga-tool.config.yml` file. During development, you can set your `url` to your tool's localhost URL, for example, `http://localhost:5173/index`.
 
 **TODO: check if there are advantages of using the local vs. the final URL. For now it seems the local URL seems the best as it updates immediately and without deploy. But there might be further considerations?**
 
@@ -215,7 +213,7 @@ Alternatively, you can view it at the home route, such as `http://localhost:5173
 
 When you build your tool's frontend with `npm run build` SvelteKit will compile your svelte site at `+page.svelte` to a static site into the `./build` directory.
 
-The entry HTML file of the created static site will be named after the given route name, so the route name `src/routes/my-tool-name` will translate to `my-tool-name.html`.
+The entry HTML file will be `index.html`, so the route name `src/routes/index` will translate to `index.html`.
 
 **TODO consider and explain what happens next and how it gets pulled into the editor and revise above accordingly**
 
