@@ -1,7 +1,7 @@
 name: 'Quote Card'
 slug: 'quote_card'
 category: 'Editorial'
-package_name: 'riga-tool-quote-card'
+package_name: 'riga-editor-tool-quote-card'
 image: 'https://i.ibb.co/JkdZrXj/Blueprint-0.jpg'
 url: 'http://localhost:5174/quote-card'
 settings:

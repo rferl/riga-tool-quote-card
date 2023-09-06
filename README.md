@@ -54,15 +54,15 @@ Your Settings component lives in `/src/lib/components` and needs to be called `S
 
 Each Settings component repo requires a `riga-tool.config.yml` configuration file which will be the base for the editor's tool registry. The file holds the following properties:
 
-| Property <type>                  | Required | Description                                                                  |
-| -------------------------------- | -------- | ---------------------------------------------------------------------------- |
-| `name <string>`                  | ✓        | the human readable name of the tool                                          |
-| `slug <string>`                  | ✓        | lower case machine readable slug `[a-z0-9]` with `_` for spaces              |
-| `category <string>`              | ✓        | human readable tool category (like _Editorial_, _Data viz_, ...)             |
-| `package_name <string>`          | ✓        | the name of your repository as per `package.json` starting with `riga-tool-` |
-| `image <string>`                 | ✓        | image URL of the image to be displayed on the tool's card in the editor      |
-| `url <string>`                   |          | the URL the tool UI is hosted at                                             |
-| `settings <string \| number {}>` |          | default settings using either strings or number values (example below)       |
+| Property <type>                  | Required | Description                                                                         |
+| -------------------------------- | -------- | ----------------------------------------------------------------------------------- |
+| `name <string>`                  | ✓        | the human readable name of the tool                                                 |
+| `slug <string>`                  | ✓        | lower case machine readable slug `[a-z0-9]` with `_` for spaces                     |
+| `category <string>`              | ✓        | human readable tool category (like _Editorial_, _Data viz_, ...)                    |
+| `package_name <string>`          | ✓        | the name of your repository as per `package.json` starting with `riga-editor-tool-` |
+| `image <string>`                 | ✓        | image URL of the image to be displayed on the tool's card in the editor             |
+| `url <string>`                   |          | the URL the tool UI is hosted at                                                    |
+| `settings <string \| number {}>` |          | default settings using either strings or number values (example below)              |
 
 ```
 # settings example:
