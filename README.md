@@ -54,29 +54,15 @@ Your Settings component lives in `/src/lib/components` and needs to be called `S
 
 Each Settings component repo requires a `riga-tool.config.yml` configuration file which will be the base for the editor's tool registry. The file holds the following properties:
 
-| Property <type>                  | Required | Description                                                                         |
-| -------------------------------- | -------- | ----------------------------------------------------------------------------------- |
-| `name <string>`                  | ✓        | the human readable name of the tool                                                 |
-| `slug <string>`                  | ✓        | lower case machine readable slug `[a-z0-9]` with `_` for spaces                     |
-| `category <string>`              | ✓        | human readable tool category (like _Editorial_, _Data viz_, ...)                    |
-| `package_name <string>`          | ✓        | the name of your repository as per `package.json` starting with `riga-editor-tool-` |
-| `image <string>`                 | ✓        | image URL of the image to be displayed on the tool's card in the editor             |
-| `url <string>`                   |          | the URL the tool UI is hosted at                                                    |
-| `settings <string \| number {}>` |          | default settings using either strings or number values (example below)              |
-
-```
-# settings example:
-
-settings:
-  quote_text: 'Hello'
-  quote_symbol: '&#10078;'
-  quote_text_size: 3
-  quote_text_color: '#666666'
-  quote_symbol_color: '#f0f0f0'
-  quote_background_color: '#fcfcfc'
-```
-
-The configuration files of each editor installed tool are the base for the editor's tool registry.
+| Property       | type                                | Required | Description                                                                         | Example                                                             |
+| -------------- | ----------------------------------- | :------: | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`         | string                              |    ✓     | the human readable name of the tool                                                 | `'Quote Card'`                                                      |
+| `slug`         | string                              |    ✓     | lower case machine readable slug `[a-z0-9]` with `_` for spaces                     | `'quote_card'`                                                      |
+| `category`     | string                              |    ✓     | human readable tool category (like _Editorial_, _Data viz_, ...)                    | `'Data viz'`                                                        |
+| `package_name` | string                              |    ✓     | the name of your repository as per `package.json` starting with `riga-editor-tool-` | `'riga-editor-tool-quote-card'`                                     |
+| `image`        | string                              |    ✓     | image URL of the image to be displayed on the tool's card in the editor             | `'https://i.ibb.co/my-image.jpg'`                                   |
+| `url`          | string                              |          | the URL the tool UI is hosted at                                                    | `'https://my-app.azurestaticapps.net/'`                             |
+| `settings`     | list of records (string or numbers) |          | default settings using either strings or number values                              | <pre>settings:<br> quote_text: 'Hello'<br> quote_text_size: 3</pre> |
 
 **TODO: check if all properties above are still correct**
 
@@ -199,15 +185,18 @@ However, if you're building a UI based tool you can use this repo as a developme
 
 Some notes for writing your tool's UI as part of the base tool repo (step 4 above):
 
-#### How can I view my tool?
+#### How can I view my tool during development?
 
-Running `npm run dev` enables you to view your tool UI in two different locations.
+1. Set your `riga-tool.config.yml` `url` value is set to your local servers URL (eg. `http://localhost:5173/index`)
+2. Run `npm run dev`
 
-You can see your changes _live_ and in a _full screen_ preview at the tool's route. For instance, if your tool is located at `src/routes/index`, you can monitor your progress at `http://localhost:5173/index` (note that port `5173` may vary).
+You can then see your changes _live_ and in a _full screen_ preview at the tool's route. For instance, if your tool is located at `src/routes/index`, you can monitor your progress at `http://localhost:5173/index` (note that port `5173` may vary).
 
 Alternatively, you can view it at the home route, such as `http://localhost:5173`. This option lets you see your UI within the _preview pane_, adjacent to the settings panel. The preview pane is an iframe that points to the `url` value specified in the `riga-tool.config.yml` file. During development, you can set your `url` to your tool's localhost URL, for example, `http://localhost:5173/index`.
 
-**TODO: check if there are advantages of using the local vs. the final URL. For now it seems the local URL seems the best as it updates immediately and without deploy. But there might be further considerations?**
+Once you're done with testing, set `riga-tool.config.yml`'s `url` value to the final hosting URL.
+
+**TODO: How to get around the lack of ID in dev mode?**
 
 #### What happens when I build my tool?
 
