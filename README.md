@@ -54,15 +54,21 @@ Your Settings component lives in `/src/lib/components` and needs to be called `S
 
 Each Settings component repo requires a `riga-tool.config.yml` configuration file which will be the base for the editor's tool registry. The file holds the following properties:
 
-| Property       | type                                | Required | Description                                                                         | Example                                                             |
-| -------------- | ----------------------------------- | :------: | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `name`         | string                              |    ✓     | the human readable name of the tool                                                 | `'Quote Card'`                                                      |
-| `slug`         | string                              |    ✓     | lower case machine readable slug `[a-z0-9]` with `_` for spaces                     | `'quote_card'`                                                      |
-| `category`     | string                              |    ✓     | human readable tool category (like _Editorial_, _Data viz_, ...)                    | `'Data viz'`                                                        |
-| `package_name` | string                              |    ✓     | the name of your repository as per `package.json` starting with `riga-editor-tool-` | `'riga-editor-tool-quote-card'`                                     |
-| `image`        | string                              |    ✓     | image URL of the image to be displayed on the tool's card in the editor             | `'https://i.ibb.co/my-image.jpg'`                                   |
-| `url`          | string                              |          | the URL the tool UI is hosted at                                                    | `'https://my-app.azurestaticapps.net/'`                             |
-| `settings`     | list of records (string or numbers) |          | default settings using either strings or number values                              | <pre>settings:<br> quote_text: 'Hello'<br> quote_text_size: 3</pre> |
+| Property                   | type                                | Required | Description                                                                         | Example                                                                          |
+| -------------------------- | ----------------------------------- | :------: | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `name`                     | string                              |    ✓     | The human readable name of the tool                                                 | `'Quote Card'`                                                                   |
+| `slug`                     | string                              |    ✓     | Lower case machine readable slug `[a-z0-9]` with `_` for spaces                     | `'quote_card'`                                                                   |
+| `category`                 | string                              |    ✓     | Human readable tool category (like _Editorial_, _Data viz_, ...)                    | `'Data viz'`                                                                     |
+| `package_name`             | string                              |    ✓     | The name of your repository as per `package.json` starting with `riga-editor-tool-` | `'riga-editor-tool-quote-card'`                                                  |
+| `image`                    | string                              |    ✓     | Image URL of the image to be displayed on the tool's card in the editor             | `'https://i.ibb.co/my-image.jpg'`                                                |
+| `url`                      | string                              |          | The URL the tool UI is hosted at                                                    | `'https://my-app.azurestaticapps.net/'`                                          |
+| `settings`                 | list of records (string or numbers) |          | Default settings using either strings or number values                              | <pre>settings:<br> quote_text: 'Hello'<br> quote_text_size: 3</pre>              |
+| `output`                   | list of records (string or boolean) |    ✓     | Default settings using either strings or number values                              | see below                                                                        |
+| `output.type`              | string                              |    ✓     | The type of the output. Currently only `iframe` is supported                        | `iframe`                                                                         |
+| `output.code`              | string                              |    ✓     | The output                                                                          | `'<iframe src="https://a.bc/?tiid={tiid}" width="100%" height="100%"></iframe>'` |
+| `output.tiid`              | boolean                             |    ✓     | Flag if the output code requires a tool instance id to work                         | `true`                                                                           |
+| `output.panel_title`       | string                              |          | Title of the output code panel in the Editor                                        | `Copy your embed code`                                                           |
+| `output.panel_description` | string                              |          | Descripttion of the output code panel in the Editor                                 | `Please copy your embed code here`                                               |
 
 **TODO: check if all properties above are still correct**
 
