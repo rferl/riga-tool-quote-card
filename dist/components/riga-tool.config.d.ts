@@ -4,7 +4,6 @@ declare const _default: {
     category: string;
     package_name: string;
     image: string;
-    url: string;
     settings: {
         quote_text: string;
         quote_symbol: string;
@@ -12,6 +11,7 @@ declare const _default: {
         quote_text_color: string;
         quote_symbol_color: string;
         quote_background_color: string;
+        iframe_title: string;
     };
 };
 export default _default;

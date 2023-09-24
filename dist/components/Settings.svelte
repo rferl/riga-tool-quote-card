@@ -4,6 +4,7 @@
 import ColorPicker from "./controls/ColorPicker.svelte";
 import DropDown from "./controls/Dropdown.svelte";
 import config from "./riga-tool.config.js";
+import { updateOutput } from "../output";
 function decodeHtml(html) {
   if (typeof document === "undefined")
     return html;
@@ -11,7 +12,9 @@ function decodeHtml(html) {
   txt.innerHTML = html;
   return txt.value;
 }
+export let id;
 export let settings;
+export let output;
 const defaultSettings = config.settings;
 let isLoaded = false;
 onMount(async () => {
@@ -24,6 +27,9 @@ const quoteSymbolDropDown = [
   { value: "&#10076;", label: decodeHtml("&#10076;") },
   { value: "&#10075;", label: decodeHtml("&#10075;") }
 ];
+$:
+  if ($settings)
+    updateOutput(id, settings, output);
 </script>
 
 {#if isLoaded}
@@ -67,6 +73,18 @@ const quoteSymbolDropDown = [
 			</div>
 			<div class="rt-setting">
 				<ColorPicker label="Quote symbol color" {settings} setting="quote_symbol_color" />
+			</div>
+		</fieldset>
+		<fieldset class="rt-fieldset">
+			<legend class="rt-legend">Output Settings</legend>
+			<div class="rt-setting w-full">
+				<label for="iframe-title" class="rt-label">Iframe title</label>
+				<input
+					name="iframe-title"
+					id="iframe-title"
+					class="rt-input font-skolar max-w-none p-2 text-gray-500"
+					bind:value={$settings.iframe_title}
+				/>
 			</div>
 		</fieldset>
 	</form>
