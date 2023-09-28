@@ -7,7 +7,11 @@
 	import { writable } from 'svelte/store';
 	import type { SettingsWritable } from '$types/index.js';
 
-	// `settings` can but don't have to be value initialised.
+	// Emulate required Settings props
+	const id = '';
+	const output = writable({ code: '' });
+
+	// `settings` can but don't have to be value initialised
 	const settings: SettingsWritable = writable({
 		quote_text: 'I am a quote',
 		quote_text_size: 5
@@ -29,4 +33,5 @@
 	<div class="text-gray-400">Settings</div>
 	<button class="btn-base" on:click={save}>Save</button>
 </div>
-<Settings {settings} />
+<!-- Focus on settings prop rather than id and output props -->
+<Settings {id} {settings} {output} />

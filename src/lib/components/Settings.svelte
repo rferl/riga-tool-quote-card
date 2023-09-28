@@ -5,8 +5,8 @@
 	import ColorPicker from './controls/ColorPicker.svelte';
 	import DropDown from './controls/Dropdown.svelte';
 	import config from './riga-tool.config.js';
-	import { updateOutput } from '../output';
-	
+	import { updateOutput } from '../output/index.js';
+
 	// TODO: load types from an external lib both the
 	// editor and the riga settings component can access
 	// This includes settings, ouput, ...
@@ -45,8 +45,8 @@
 		{ value: '&#10075;', label: decodeHtml('&#10075;') }
 	];
 
-		// Run output logic
-		$: if ($settings) updateOutput(id, settings, output);
+	// Run output logic
+	$: if ($settings) updateOutput(id, settings, output);
 </script>
 
 {#if isLoaded}
