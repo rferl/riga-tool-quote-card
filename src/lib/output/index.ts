@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { get } from "svelte/store";
 
 function updateOutput(id: string, settings: any, output: any) {
-
   const settingsValues: any = get(settings);
 
   output.update((value: any) => {
@@ -11,8 +11,7 @@ function updateOutput(id: string, settings: any, output: any) {
     value.description = 'Please copy embed code below';
 
     return value;
-  })
-
+  });
 }
 
 export { updateOutput }

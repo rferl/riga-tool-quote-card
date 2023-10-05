@@ -5,7 +5,7 @@
 <script lang="ts">
 	import Settings from '$lib/components/Settings.svelte';
 	import { writable } from 'svelte/store';
-	import type { SettingsWritable } from '$types/index.js';
+	import type { SettingsWritable } from '$lib/types/index.d.js';
 
 	// Emulate required Settings props
 	const id = '';
