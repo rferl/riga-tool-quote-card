@@ -4,7 +4,7 @@
 import ColorPicker from "./controls/ColorPicker.svelte";
 import DropDown from "./controls/Dropdown.svelte";
 import config from "./riga-tool.config.js";
-import { updateOutput } from "../output";
+import { updateOutput } from "../output/index.js";
 function decodeHtml(html) {
   if (typeof document === "undefined")
     return html;

@@ -31,7 +31,7 @@ onMount(() => {
 		type="text"
 		name={`${id}-hex`}
 		id={`${id}-hex`}
-		class="rt-input"
+		class="rt-input w-full"
 		bind:value={hexInput}
 		on:change={updateColor}
 	/>

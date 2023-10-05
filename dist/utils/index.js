@@ -1,4 +1,7 @@
-export function slugify(string) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setID = exports.slugify = void 0;
+function slugify(string) {
     const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
     const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
     const p = new RegExp(a.split('').join('|'), 'g');
@@ -13,7 +16,8 @@ export function slugify(string) {
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+\$/, ''); // Trim - from end of text
 }
-export function setID() {
+exports.slugify = slugify;
+function setID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let prefix = 'rt-';
     for (let i = 0; i < 8; i++) {
@@ -21,3 +25,4 @@ export function setID() {
     }
     return prefix;
 }
+exports.setID = setID;

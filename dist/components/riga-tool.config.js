@@ -1,9 +1,12 @@
-export default {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
     "name": "Quote Card",
     "slug": "quote_card",
     "category": "Editorial",
     "package_name": "riga-editor-tool-quote-card",
     "image": "https://i.ibb.co/JkdZrXj/Blueprint-0.jpg",
+    "ui": true,
     "settings": {
         "quote_text": "Hello",
         "quote_symbol": "&#10078;",
