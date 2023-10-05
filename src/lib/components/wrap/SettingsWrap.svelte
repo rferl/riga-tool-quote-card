@@ -1,37 +1,17 @@
-<!-- This component is just emulating the behavior of the Editor:
-	   (1) passing a settings object into the Settings component and 
-		 (2) stringifying the object before persisting it in storage -->
-
+<!-- This component
+		 (1) emulates the behavior of the Editor by being the conduit for Settings props 
+		 (2) prepares tool UI preview of tools build in `/index` route -->
 <script lang="ts">
 	import Settings from '$lib/components/Settings.svelte';
 	import { writable } from 'svelte/store';
-	import type { SettingsWritable } from '$lib/types/index.d.js';
+	import { settings } from '$lib/stores';
 
-	// Emulate required Settings props
+	// Emulate required but herein unused props
 	const id = '';
 	const output = writable({ code: '' });
-
-	// `settings` can but don't have to be value initialised
-	const settings: SettingsWritable = writable({
-		quote_text: 'I am a quote',
-		quote_text_size: 5
-	});
-
-	function save() {
-		// Build JSON settings object to send on.
-		const settings_json: { [key: string]: any } = {};
-		for (const [key, value] of Object.entries($settings)) {
-			console.log(key, value);
-			settings_json[key] = value;
-		}
-		console.log(JSON.stringify(settings_json));
-		// TODO send settings to wherever
-	}
 </script>
 
 <div class=" font-skolar-sans m-4 flex items-center justify-between">
-	<div class="text-gray-400">Settings</div>
-	<button class="btn-base" on:click={save}>Save</button>
+	<div class="text-gray-400">Settings preview</div>
 </div>
-<!-- Focus on settings prop rather than id and output props -->
 <Settings {id} {settings} {output} />

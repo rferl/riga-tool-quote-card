@@ -2,13 +2,16 @@
 		 tool UI's are decoupled from all else riga related -->
 <script>
 	// @ts-nocheck
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import './tool-global.css';
 
+	// Production
 	let id = '';
 	let settings = null;
 	let loading = true;
 
+	// Production
 	function getId() {
 		// The tool instance id will be passed through as URL param
 		// of the iframe source which we fetch here.
@@ -18,32 +21,32 @@
 	}
 
 	async function getSettings(id) {
-		// Couple of options to get the data:
-		// (1) Get the data from the hardcoded test data
-		// const response = await fetch('/settings/quote-card.json');
-		// (2) Get the data with a simple fetch (not working with strict CORS)
+		//Get the data with a simple fetch (not working with strict CORS)
 		const response = await fetch(
 			`https://func-inno-prod-riga-api.azurewebsites.net/api/tools/${id}`
 		);
 
-		// Results for (1) and (2)
 		if (!response.ok) {
 			console.error("Error fetching the tool's config json:", response.status, response.statusText);
 			return null;
 		}
 		const responseData = await response.json();
 
-		// return responseData ?? null; // (1)
-		return responseData?.tool?.settings ?? null; // (2)
+		return responseData?.tool?.settings ?? null;
 	}
 
-	onMount(() => {
-		(async () => {
+	onMount(async () => {
+		if (import.meta.env.DEV) {
+			// Development (grab settings from preview iframe)
+			id = true;
+			settings = JSON.parse($page.url.searchParams.get('settings'));
+		} else {
+			// Production (grab settings from API)
 			id = getId();
-			// id = '64b75565-f0b1-49c4-a77a-44f22040e42d'; // test ID
 			settings = await getSettings(id);
-			loading = false;
-		})();
+		}
+
+		loading = false;
 	});
 </script>
 
