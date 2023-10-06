@@ -1,5 +1,5 @@
 import type { Writable } from 'svelte/store';
-type SettingsValue = string | number;
+type SettingsValue = string | number | boolean;
 type Settings = {
     [key: string]: SettingsValue;
 };

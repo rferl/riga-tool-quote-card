@@ -4,6 +4,8 @@
 
 <script>import Settings from "../Settings.svelte";
 import { writable } from "svelte/store";
+const id = "";
+const output = writable({ code: "" });
 const settings = writable({
   quote_text: "I am a quote",
   quote_text_size: 5
@@ -22,4 +24,5 @@ function save() {
 	<div class="text-gray-400">Settings</div>
 	<button class="btn-base" on:click={save}>Save</button>
 </div>
-<Settings {settings} />
+<!-- Focus on settings prop rather than id and output props -->
+<Settings {id} {settings} {output} />

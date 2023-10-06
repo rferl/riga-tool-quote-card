@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { get } from "svelte/store";
 function updateOutput(id, settings, output) {
     const settingsValues = get(settings);
