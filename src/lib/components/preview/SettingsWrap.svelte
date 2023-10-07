@@ -11,7 +11,11 @@
 	const output = writable({ code: '' });
 </script>
 
-<div class=" font-skolar-sans m-4 flex items-center justify-between">
-	<div class="text-gray-400">Settings preview</div>
+<div class="h-full p-4">
+	<div class="h-full overflow-y-auto">
+		<div class="border border-gray-300 shadow-lg">
+			<div class="font-skolar-sans my-3 px-4 font-extralight text-gray-400">Settings preview</div>
+			<Settings {id} {settings} {output} />
+		</div>
+	</div>
 </div>
-<Settings {id} {settings} {output} />
