@@ -1,11 +1,12 @@
 <script lang="ts">
+	import config from '../lib/components/riga-tool.config';
 	import Title from '$lib/components/preview/Title.svelte';
 	import Controls from '$lib/components/preview/Controls.svelte';
 	import SettingsWrap from '$lib/components/preview/SettingsWrap.svelte';
 	import Preview from '$lib/components/preview/Preview.svelte';
 </script>
 
-<div class="base-grid">
+<div class={`base-grid ${config.ui ? 'ui-true' : 'ui-false'}`}>
 	<div class="base-titles"><Title /></div>
 	<div class="base-controls"><Controls /></div>
 	<div class="base-settings"><SettingsWrap /></div>
@@ -21,12 +22,20 @@
 		gap: 0 2rem;
 		margin: 0 1rem;
 		grid-template-columns: 100%;
+	}
+	.ui-true {
 		grid-template-areas:
 			'titles'
 			'controls'
 			'preview'
 			'settings';
 	}
+	.ui-false {
+		grid-template-areas:
+			'titles'
+			'settings';
+	}
+
 	.base-titles {
 		grid-area: titles;
 	}
