@@ -1,67 +1,63 @@
 <script lang="ts">
-	// Loading the tool's config to control the hosted origin
-	import config from '$lib/components/riga-tool.config.js';
-	import SettingsWrap from '$lib/components/wrap/SettingsWrap.svelte';
-	import { onMount } from 'svelte';
-
-	// This is a temporary editor markup. Ultimately we want to have the
-	// same markup as on the Editor's /editor page. For that we need to
-	// get a library set up to use in the Editor and the base tool repo.
-	let w: number;
-	let h: number;
-
-	let w_editor: number;
-	let h_editor: number;
-
-	function adaptSize() {
-		w_editor = w;
-		h_editor = h;
-	}
-	function resize() {
-		// Ensure that the layout is updated before calling `adaptSize`
-		requestAnimationFrame(adaptSize);
-	}
-
-	onMount(() => {
-		resize();
-		window.addEventListener('resize', resize);
-		return () => {
-			window.removeEventListener('resize', resize);
-		};
-	});
+	import config from '../lib/components/riga-tool.config';
+	import Title from '$lib/components/preview/Title.svelte';
+	import Controls from '$lib/components/preview/Controls.svelte';
+	import SettingsWrap from '$lib/components/preview/SettingsWrap.svelte';
+	import Preview from '$lib/components/preview/Preview.svelte';
 </script>
 
-<div class="m-8">
-	<div class="mb-8">
-		<input
-			type="number"
-			name="w-ctrl"
-			id="w-ctrl"
-			bind:value={w_editor}
-			class="max-w-[100px] rounded p-2 text-xs"
-		/>
-		<input
-			type="number"
-			name="h-ctrl"
-			id="h-ctrl"
-			bind:value={h_editor}
-			class="max-w-[100px] rounded p-2 text-xs"
-		/>
-	</div>
-	<div class="flex flex-col md:flex-row">
-		<div class="w-5/6 md:mr-4 md:w-3/5" bind:clientWidth={w} bind:clientHeight={h}>
-			<div class="outline outline-gray-200" style="width: {w_editor}px; height: {h_editor}px">
-				<iframe
-					src={config.url}
-					width="100%"
-					height="{h_editor}px"
-					frameborder="0"
-					title="tool-ui"
-				/>
-			</div>
-		</div>
-		<div class="w-5/6 border border-gray-100 shadow-xl md:w-2/5">
-			<SettingsWrap />
-		</div>
-	</div>
+<div class={`base-grid ${config.ui ? 'ui-true' : 'ui-false'}`}>
+	<div class="base-titles"><Title /></div>
+	<div class="base-controls"><Controls /></div>
+	<div class="base-settings"><SettingsWrap /></div>
+	<div class="base-preview"><Preview /></div>
 </div>
+
+<style>
+	/* Tailwind doesn't implement grid-areas, hence using base css here */
+	.base-grid {
+		display: grid;
+		height: 100vh;
+		overflow-y: auto;
+		gap: 0 2rem;
+		margin: 0 1rem;
+		grid-template-columns: 100%;
+	}
+	.ui-true {
+		grid-template-areas:
+			'titles'
+			'controls'
+			'preview'
+			'settings';
+	}
+	.ui-false {
+		grid-template-areas:
+			'titles'
+			'settings';
+	}
+
+	.base-titles {
+		grid-area: titles;
+	}
+	.base-controls {
+		grid-area: controls;
+	}
+	.base-settings {
+		grid-area: settings;
+	}
+	.base-preview {
+		grid-area: preview;
+	}
+
+	/* 768px == tailwind md */
+	@media (min-width: 768px) {
+		.base-grid {
+			margin: 0 4rem;
+			grid-template-columns: minmax(0, 400px) minmax(0, 1fr); /* set Settings col width */
+			grid-template-rows: 10% 90%; /* need height for Settings overflow to work */
+			grid-template-areas:
+				'titles controls'
+				'settings preview';
+		}
+	}
+</style>

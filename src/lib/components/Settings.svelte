@@ -9,7 +9,7 @@
 
 	// TODO: load types from an external lib both the
 	// editor and the riga settings component can access
-	// This includes settings, ouput, ...
+	// This includes settings, output, ...
 
 	// Helper funcs
 	function decodeHtml(html: string) {
