@@ -6,6 +6,7 @@
 	import DropDown from './controls/Dropdown.svelte';
 	import config from './riga-tool.config.js';
 	import { updateOutput } from '../output/index.js';
+	import type { SettingsWritable, OutputWritable } from '../types/index.d.js';
 
 	// TODO: load types from an external lib both the
 	// editor and the riga settings component can access
@@ -20,10 +21,9 @@
 	}
 
 	// Props
-	// export let settings: SettingsWritable;
 	export let id: string;
-	export let settings: any;
-	export let output: any;
+	export let settings: SettingsWritable;
+	export let output: OutputWritable;
 
 	// Define default settings in config yaml. Passed in settings
 	// will overwrite these default settings.

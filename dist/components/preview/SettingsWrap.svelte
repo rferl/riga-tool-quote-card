@@ -1,15 +1,11 @@
 <!-- This component
 		 (1) emulates the behavior of the Editor by being the conduit for Settings props 
 		 (2) prepares tool UI preview of tools build in `/index` route -->
-<script lang="ts">
-	import Settings from '$lib/components/Settings.svelte';
-	import { writable } from 'svelte/store';
-	import { settings } from '$lib/stores';
-	import type { OutputWritable } from '$lib/types';
-
-	// Emulate required but herein unused props
-	const id = '';
-	const output: OutputWritable = writable({ code: '' });
+<script>import Settings from "../Settings.svelte";
+import { writable } from "svelte/store";
+import { settings } from "../../stores";
+const id = "";
+const output = writable({ code: "" });
 </script>
 
 <div class="h-full p-4">
