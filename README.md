@@ -1,102 +1,93 @@
 # RIGA Quote Card
 
-Base repo for building a RIGA tool **Settings component** as well as - optionally - a **tool frontend**.
+This is a pre-configured [**SvelteKit library project**](https://kit.svelte.dev/docs/packaging) for a RIGA tool developer to build a Svelte `Settings` component and configure its use for further integration within the [RIGA Editor](https://github.com/rferl/riga-editor).
 
-## Background
+It also offers a **development environment** that allows you to construct, preview, and test your `Settings` component during development.
 
-The RIGA editor provides a list of base tools that can be configured to work in a specific way. For example, a quote card tool can be configured with three settings to show specific quote text, in a specific font-size of a specific color. Tool instance creators can configure settings in the RIGA editor's Settings UI (**TODO link**). This UI or rather UI component can be built with the help of this repo. To do so you would typically:
+Additionally, this repository can be used to build, develop, and expose a **tool frontend** in case your tool template provides a frontend.
 
-1. Define the settings your RIGA tool needs
-2. Build these settings out as controls in a Svelte component
-3. Expose your Svelte component in a component library (with just that single Settings component)
+The repository exposes:
 
-As the RIGA editor is also a Svelte app your Settings component can now be installed easily in the [RIGA editor repo](https://github.com/rferl/riga-editor) via npm and consumed by the editor.
+1. a `riga-tool.config.yml` configuration file
+2. a `Settings.svelte` component
+3. an optional tool frontend (if applicable)
 
-## Remit
+Once built, the library can be installed using `npm install` and used within the [RIGA Editor](https://github.com/rferl/riga-editor).
 
-In technical terms, this repo is a pre-configured [SvelteKit library app](https://kit.svelte.dev/docs/packaging) (using Typescript) with all the pieces required to build and expose a Settings component:
-
-- a base `Settings.svelte` component
-- helper libraries
-- Settings styles and classes
-- other assets like fonts etc.
-- a configuration YAML file
-
-As an additional benefit, this repo provides a development environment to not only build but also view and test your Settings component during development.
-
-Furthermore, in case your tool comes with a frontend (like in the quote-card example), you can also use this repo to build and expose the tool frontend. Both uses are described below.
-
-## Settings component
-
-### Quickstart
+## Quickstart
 
 1. Clone the repo
 
-2. In `package.json` set the `name` to your tool's name prefixed with `riga-` (eg. `riga-quote-card`)
+2. In `package.json`, set the `name` to your tool's name prefixed with `riga-` (e.g., `riga-quote-card`)
 
 3. Populate the `riga-tool.config.yml` (see below for details)
 
-4. Run `npm run dev` for development
+4. Run `npm run dev` for development and preview your `Settings` component on the given localhost
 
 5. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
 
-6. Once you're happy with your component run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
+6. Once you're happy with your component, run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
 
-### Writing Settings component
+## The `riga-tool.config.yml` configuration file
 
-Some general and hopefully helpful notes and pointers when writing your Settings component (step 5 above):
+To enable the RIGA Editor to catalog available tool templates, it constructs a registry derived from each installed tool template's `riga-tool.config.yml` configuration file. It accepts the following properties:
 
-#### Location and name
+| Property       | type                                | Required | Description                                                                         | Example                                                             |
+| -------------- | ----------------------------------- | :------: | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`         | string                              |    ✓     | The human-readable name of the tool                                                 | `'Quote Card'`                                                      |
+| `slug`         | string                              |    ✓     | Lower case machine-readable slug `[a-z0-9]` with `_` for spaces                     | `'quote_card'`                                                      |
+| `category`     | string                              |    ✓     | Human-readable tool category (like _Editorial_, _Data viz_, ...)                    | `'Data viz'`                                                        |
+| `package_name` | string                              |    ✓     | The name of your repository as per `package.json` starting with `riga-editor-tool-` | `'riga-editor-tool-quote-card'`                                     |
+| `image`        | string                              |    ✓     | Image URL of the image to be displayed on the tool's card in the editor             | `'https://i.ibb.co/my-image.jpg'`                                   |
+| `ui`           | boolean                             |    ✓     | Indication if tool template comes with a tool frontend                              | `true`                                                              |
+| `settings`     | list of records (string or numbers) |    ✓     | Default settings using either strings or number values                              | <pre>settings:<br> quote_text: 'Hello'<br> quote_text_size: 3</pre> |
 
-Your Settings component lives in `/src/lib/components` and needs to be called `Settings.svelte`.
+## `Settings.svelte` component
 
-#### Configuration
+The `Settings` component lives in `/src/lib/components` and must be called **`Settings.svelte`**. You can preview your work on the component on the given localhost URL after running `npm run dev`.
 
-Each Settings component repo requires a `riga-tool.config.yml` configuration file which will be the base for the editor's tool registry. The file holds the following properties:
+### Properties
 
-| Property                   | type                                | Required | Description                                                                         | Example                                                                          |
-| -------------------------- | ----------------------------------- | :------: | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `name`                     | string                              |    ✓     | The human readable name of the tool                                                 | `'Quote Card'`                                                                   |
-| `slug`                     | string                              |    ✓     | Lower case machine readable slug `[a-z0-9]` with `_` for spaces                     | `'quote_card'`                                                                   |
-| `category`                 | string                              |    ✓     | Human readable tool category (like _Editorial_, _Data viz_, ...)                    | `'Data viz'`                                                                     |
-| `package_name`             | string                              |    ✓     | The name of your repository as per `package.json` starting with `riga-editor-tool-` | `'riga-editor-tool-quote-card'`                                                  |
-| `image`                    | string                              |    ✓     | Image URL of the image to be displayed on the tool's card in the editor             | `'https://i.ibb.co/my-image.jpg'`                                                |
-| `url`                      | string                              |          | The URL the tool UI is hosted at                                                    | `'https://my-app.azurestaticapps.net/'`                                          |
-| `settings`                 | list of records (string or numbers) |          | Default settings using either strings or number values                              | <pre>settings:<br> quote_text: 'Hello'<br> quote_text_size: 3</pre>              |
-| `output`                   | list of records (string or boolean) |    ✓     | Default settings using either strings or number values                              | see below                                                                        |
-| `output.type`              | string                              |    ✓     | The type of the output. Currently only `iframe` is supported                        | `iframe`                                                                         |
-| `output.code`              | string                              |    ✓     | The output                                                                          | `'<iframe src="https://a.bc/?tiid={tiid}" width="100%" height="100%"></iframe>'` |
-| `output.tiid`              | boolean                             |    ✓     | Flag if the output code requires a tool instance id to work                         | `true`                                                                           |
-| `output.panel_title`       | string                              |          | Title of the output code panel in the Editor                                        | `Copy your embed code`                                                           |
-| `output.panel_description` | string                              |          | Descripttion of the output code panel in the Editor                                 | `Please copy your embed code here`                                               |
+The component receives the following props passed in by its parent component in the RIGA Editor:
 
-**TODO: check if all properties above are still correct**
+| Property   | Type   | Description                                                                                                                | Example                                                                                                                                                                                  |
+| ---------- | ------ | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `settings` | object | An object that contains the current settings of the tool. This object is writable and can be updated by the form controls. | <pre>{<br>&nbsp;&nbsp;"quote_text": "Hello",<br>&nbsp;&nbsp;"quote_text_size": 3,<br>}</pre>                                                                                             |
+| `id`       | string | A unique identifier for the tool instance that maps each tool instance to its DB stored settings.                          | `'123e4567-e89b-12d3-a456-426614174000'`                                                                                                                                                 |
+| `output`   | object | An object that contains the output of the tool. This object is writable and can be updated by the form controls.           | <pre>{<br>&nbsp;&nbsp;"code": "\<iframe>...",<br>&nbsp;&nbsp;"title" (optional): "Copy your embed code here",<br>&nbsp;&nbsp;"description" (optional): "This is your embed code" }</pre> |
 
-#### Layout
+### Layout
 
-Each Settings component is a `form` element with one or more `fieldset` elements representing different setting blocks containing individual settings. Here's the Settings "anatomy" showing all 6 core elements, their HTML tags and pre-defined CSS classes:
+Each Settings component is a `form` element with one or more `fieldset` elements representing different setting blocks containing individual settings. Here's the `Settings` "anatomy" showing all 6 core elements, their HTML tags, and pre-defined CSS classes:
 
 <img src='https://i.ibb.co/cwcK0nG/Settings-anatomy.jpg' width='100%'>
 
-See `src/lib/components/Settings.svelte` for a base implementation in code.
+See [`src/lib/components/Settings.svelte`](src/lib/components/Settings.svelte) for a base implementation in code.
 
-#### How to write a single setting?
+### How to write a single setting?
 
-You can write vanilla HTML if you for example want to add a simple input with a label.
+It's up to you how to implement a setting - you can write vanilla HTML or you can write your own sub-components. Alternatively, you can use a set of predefined components for common controls like dropdowns or color picker living in `src/lib/components/controls`.
 
-Alternatively, you can use a set of predefined components for common controls like dropdowns or color picker living in `src/lib/components/controls`.
+_Note, helper components will likely move into a shared library in the future._
 
-Lastly, you can write your own components.
+### CSS
 
-**TODO Note, for now helper components are stored in the repo, but will ultimately move into their own library, the tool repo will load.**
+[Tailwind](https://tailwindcss.com/docs) is being used for all `Settings` CSS.
 
-#### CSS
+In order to maintain consistent styling, the following style assets are being shared between the RIGA Editor and the tool template repositories. Please make sure the following assets and configurations are being copied over from the respective directories and files:
 
-In order to maintain consistent styling across all the different Tool's Settings UI components in the RIGA editor, please use only predefined CSS classes.
+- Fonts from RIGA Editor are required in `/static/fonts` for development
+- Configuration required from the RIGA Editor's [`tailwind.config.cjs`](https://github.com/rferl/riga-editor/blob/main/tailwind.config.cjs):
+  - `fontFamily`
+  - `colors`
+- Configuration required from the RIGA Editor's [`app.css`](https://github.com/rferl/riga-editor/blob/main/src/app.css):
 
-We're using [Tailwind](https://tailwindcss.com/docs) for all settings CSS and all pre-defined classes can be found in `/src/app.css`. Please don't change these classes as they are in sync with the editor where they will be applied once installed.
+  - `@layer components` classes under `/* Settings component classes */` header
+  - `@layer base` font imports
 
-#### How to control the setting's layout?
+_Note, these will likely move into a shared library in the future._
+
+### How to control the setting's layout?
 
 You can control the layout and dimensions of your individual settings or setting blocks:
 
@@ -113,20 +104,17 @@ You can control the layout and dimensions of your individual settings or setting
   <textarea class="rt-input max-w-none" />
   ```
 
-#### How to view your settings component?
+### How to update the settings data?
 
-Run `npm run dev` to view your changes on the dev server.
+The `Settings`'s core task is to capture settings a template author will set or change via the component's inputs.
 
-#### How to update the settings data?
-
-The Settings's core task is to capture settings a user will set or change via the component's inputs.
-
-The capturing mechanic is straight forward. The Settings component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) from the editor it gets load into. This settings store can be updated on input change. For example:
+The update mechanic is straightforward: the `Settings` component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) from the RIGA Editor it gets loaded into. This settings store can be updated on input change. For example:
 
 ```html
 <script>
 	// The settings store passed in by the Editor:
 	export let settings;
+	// ...
 </script>
 
 <!-- Update the values for the settings' `font_size` property -->
@@ -141,7 +129,27 @@ When using predefined components, pass the `settings` store and the property nam
 
 _See the [Settings component implementation](./src/lib/components/Settings.svelte) for a complete implementation across multiple inputs._
 
-#### Utilities
+### How to update the output data?
+
+Your `Settings` component can update an `output` object you can use to produce any type of output string. Whatever you compose will be shown in the Editor's output panel:
+
+<img src="https://i.ibb.co/p1jWhfn/output-code.jpg" alt="output panel" width="50%"/>
+
+The `output` object has one required and two optional properties:
+
+```
+{
+  "code" (required): "<iframe>..." code shown in the output textarea above,
+  "title" (optional): "Copy embed code" above,
+  "description" (optional): "Please copy embed code below" in above example,
+}
+```
+
+While this output might typically be an embed code pointing to the hosted tool frontend, it is up to you what to pass on to the tool template author.
+
+To compose your output, use the `updateOutput` function in the [`src/lib/output/index.ts`](src/lib/output/index.ts) module. Note, that the output composition is flexible as you can use any of the available settings as well as the tool instance ID passed in from the Editor's parent component.
+
+### Utilities
 
 For unique element attributes (`id`, `name`, `for`, ...) you can use the utility function `setID()`. This is entirely up to you but might be helpful. Example usage in the `Dropdown` component:
 
@@ -161,9 +169,9 @@ For unique element attributes (`id`, `name`, `for`, ...) you can use the utility
 
 ## Tool Frontend
 
-All RIGA tools are assumed to have settings. Some tools might be backend only services, some might come with a rendered UI. Both, the tool's potential backend and frontend, are consciously decoupled from the Settings component, so the UI for example doesn't have to be a Svelte component to allow maximum flexibility and integration of separately built tools.
+All RIGA tool templates are assumed to have settings. Some tools might be backend-only services, some might come with a rendered UI. Both, the tool's potential backend and frontend, are consciously decoupled from the Settings component, so any tool frontend the tool developer conceives doesn't have to be a Svelte component for example, to allow maximum flexibility and integration of separately built tools.
 
-However, if you're building a UI based tool you can use this repo as a development environment - it might even make sense :))
+However, if you're building a UI-based tool you can use this repo as a development environment. This might even make sense as your `Settings` component and tool frontend are in the same place and can be developed and previewed in the same environment.
 
 ### Quickstart
 
@@ -181,69 +189,85 @@ However, if you're building a UI based tool you can use this repo as a developme
      export const prerender = true;
      ```
 
-     ...so the build script knows to build this route as a static site bundle.
+     ...so the build script knows to build this route as a **static site bundle**.
 
 4. Build your tool in `+page.svelte`
 
 5. Once you're happy with your tool, you can compile it to the `./build` folder with `npm run build`
 
-### Writing your tool's frontend
+### Developing your tool's frontend
 
-Some notes for writing your tool's UI as part of the base tool repo (step 4 above):
+#### Required steps
+
+Regardless of where you build your tool frontend - in a separate repo or within this tool template repo - you will likely be interested in:
+
+1. retrieving the tool instance ID
+2. retrieving the tool instance setting object with the ID via the [RIGA API](https://github.com/rferl/riga-api)
+3. using the settings in your tool frontend
+
+You can retrieve the tool instance ID in various ways depending on the embedding format and it is up to you how you do it in detail. Using for example an iframe embed, the tool frontend could get the id as a URL parameter via the iframe's `src` URL. See other options listed in [this issue](https://github.com/rferl/riga-editor/issues/52#issuecomment-1721561651).
+
+_Note, that this is only tested with iframes so far._
+
+Once the ID is retrieved you can use a GET request to retrieve the settings from the RGA API:
+
+```
+const response = await fetch(`${riga_endpoint_url}/api/tools/${id}`);
+const responseData = await response.json();
+const settings = responseData?.tool?.settings;
+```
+
+Now your tool frontend can use the `settings` object for any logic or to produce, style, configure its elements.
 
 #### How can I view my tool during development?
 
-1. Set your `riga-tool.config.yml` `url` value is set to your local servers URL (eg. `http://localhost:5173/index`)
-2. Run `npm run dev`
+When running `npm run dev` and navigating to the given localhost, you can view your tool frontend full screen at the `/index` route.
 
-You can then see your changes _live_ and in a _full screen_ preview at the tool's route. For instance, if your tool is located at `src/routes/index`, you can monitor your progress at `http://localhost:5173/index` (note that port `5173` may vary).
+Alternatively, you can view it on the home `/` route within a preview pane next to the settings panel. The preview pane is an iframe that points to the `/index` route and also passes through the `settings` store as a `settings` URL parameter via the iframe's `src` attribute. This way, you can see live changes as the settings from the `Settings` component will be passed through to your tool UI immediately.
 
-Alternatively, you can view it at the home route, such as `http://localhost:5173`. This option lets you see your UI within the _preview pane_, adjacent to the settings panel. The preview pane is an iframe that points to the `url` value specified in the `riga-tool.config.yml` file. During development, you can set your `url` to your tool's localhost URL, for example, `http://localhost:5173/index`.
+To make this work, you will need to add some logic to your tool frontend code to distinguish between development and production. In development mode, no tool instance ID will be available for you to use in order to fetch the settings from the API as [described above](#required-steps). Instead, the settings are being passed through directly.
 
-Once you're done with testing, set `riga-tool.config.yml`'s `url` value to the final hosting URL.
+The following is a Svelte example in code, which you can adapt to fit your use case:
 
-**TODO: How to get around the lack of ID in dev mode?**
+```js
+onMount(async () => {
+	if (import.meta.env.DEV) {
+		// Development (grab settings from preview iframe)
+		id = true;
+		settings = JSON.parse($page.url.searchParams.get('settings'));
+	} else {
+		// Production (grab settings from API)
+		id = getId();
+		settings = await getSettings(id);
+	}
+});
+```
 
 #### What happens when I build my tool?
 
-When you build your tool's frontend with `npm run build` SvelteKit will compile your svelte site at `+page.svelte` to a static site into the `./build` directory.
+When you build your tool's frontend with `npm run build`, SvelteKit will compile your Svelte site at `+page.svelte` into a static site in the `./build` directory.
 
-The entry HTML file will be `index.html`, so the route name `src/routes/index` will translate to `index.html`.
+The entry HTML file will be `index.html` as the route name `src/routes/index` will translate to `index.html`.
 
-**TODO consider and explain what happens next and how it gets pulled into the editor and revise above accordingly**
+You can now host the `build` folder and use the hosting URL in your output embed code, for example.
 
 #### Can I use Svelte when writing my tool?
 
-Yes. You can write vanilla HTML but it seems prudent to use Svelte if you choose to build your tool in this SvelteKit repo. Ideally you keep within the route directory for all components, stores and utilities you might be using to keep these separate from the Settings component using the home route and the `src/lib` structure.
+Yes. You can write vanilla HTML, but it seems prudent to use Svelte if you choose to build your tool in this SvelteKit repo. Ideally, you should keep within the route directory for all components, stores, and utilities you might be using to keep these separate from the Settings component using the home route and the `src/lib` structure.
 
-**TODO all static files are being copied over to each static build folder. Consider ramifications and solutions (there's also a chat transcript in `RFE | chats.md` on this)**
-
-**TODO add big note that settings fetch is required**
-
-## Dependencies and assets
-
-This is a collection of libs and assets used in this repo.
-
-**TODO revise this**
+## Dependency notes
 
 ### Tailwind [&#9781;](https://tailwindcss.com/) [&#9782;](https://tailwindcss.com/docs/guides/sveltekit)
 
-- Required dev-deps are`tailwindcss`, `postcss` and `autoprefixer`
-- `prettier-plugin-tailwindcss` sorts the classes in recommended order with prettiers help
-- [`@tailwindcss/forms`](https://github.com/tailwindlabs/tailwindcss-forms) allows form element reset/styling
-- When working with VSCode also install the [PostCSS Language Support](https://github.com/csstools/postcss-language) plugin to get rid of `@` rule warnings ([more](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule))
+- Required dev-deps are `tailwindcss`, `postcss`, and `autoprefixer`.
+- `prettier-plugin-tailwindcss` sorts the classes in recommended order with Prettier's help.
+- [`@tailwindcss/forms`](https://github.com/tailwindlabs/tailwindcss-forms) allows form element reset/styling.
+- When working with VSCode, also install the [PostCSS Language Support](https://github.com/csstools/postcss-language) plugin to get rid of `@` rule warnings ([more](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)).
 
-### Fonts
+---
 
-Fonts from RIGA editor are required in `/static` for development
+## Next steps
 
-### CSS
+- **Shared library**: Both the RIGA Editor repo and the tool repos share `Settings.svelte`, Tailwind classes, types, and fonts. Components for the tool edit page can also be abstracted and shared. A library to be installed by both repositories seems obvious, but it would ideally wait for a better understanding of how the repos relate to each other (npm installs, submodules, mono repo, etc.).
 
-- `tailwind.config.cjs` from RIGA editor. Parts required:
-  - fontFamily
-  - colors
-  - maybe more...
-- `app.css` from RIGA editor. Parts required for development:
-  - layer imports
-  - classes used for settings component (only those)
-  - font imports
+  In addition, the library should hold components used across all tool templates.

@@ -8,10 +8,6 @@
 	import { updateOutput } from '../output/index.js';
 	import type { SettingsWritable, OutputWritable } from '../types/index.d.js';
 
-	// TODO: load types from an external lib both the
-	// editor and the riga settings component can access
-	// This includes settings, output, ...
-
 	// Helper funcs
 	function decodeHtml(html: string) {
 		if (typeof document === 'undefined') return html;
@@ -21,15 +17,15 @@
 	}
 
 	// Props
-	export let id: string;
 	export let settings: SettingsWritable;
+	export let id: string;
 	export let output: OutputWritable;
 
-	// Define default settings in config yaml. Passed in settings
-	// will overwrite these default settings.
+	// Define default settings in config yaml. Passed in
+	// settings will overwrite these default settings.
 	const defaultSettings = config.settings;
 
-	// Use isLoaded in conjunction with the settings
+	// Use `isLoaded` in conjunction with the settings
 	// merge to wait for the render.
 	let isLoaded = false;
 	onMount(async () => {
