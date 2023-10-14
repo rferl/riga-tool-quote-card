@@ -30,7 +30,7 @@ Once built, the library can be installed using `npm install` and used within the
 
 ## The `riga-tool.config.yml` configuration file
 
-To enable the RIGA Editor to catalog available tool templates, it constructs a registry derived from each installed tool template's `riga-tool.config.yml` configuration file. It accepts the following properties:
+To enable the RIGA Editor to catalog available tool templates, it constructs a registry derived from each installed tool template's `riga-tool.config.yml` configuration file, accepting the following properties:
 
 | Property       | type                                | Required | Description                                                                         | Example                                                             |
 | -------------- | ----------------------------------- | :------: | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
@@ -50,15 +50,15 @@ The `Settings` component lives in `/src/lib/components` and must be called **`Se
 
 The component receives the following props passed in by its parent component in the RIGA Editor:
 
-| Property   | Type   | Description                                                                                                                | Example                                                                                                                                                                                  |
-| ---------- | ------ | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `settings` | object | An object that contains the current settings of the tool. This object is writable and can be updated by the form controls. | <pre>{<br>&nbsp;&nbsp;"quote_text": "Hello",<br>&nbsp;&nbsp;"quote_text_size": 3,<br>}</pre>                                                                                             |
-| `id`       | string | A unique identifier for the tool instance that maps each tool instance to its DB stored settings.                          | `'123e4567-e89b-12d3-a456-426614174000'`                                                                                                                                                 |
-| `output`   | object | An object that contains the output of the tool. This object is writable and can be updated by the form controls.           | <pre>{<br>&nbsp;&nbsp;"code": "\<iframe>...",<br>&nbsp;&nbsp;"title" (optional): "Copy your embed code here",<br>&nbsp;&nbsp;"description" (optional): "This is your embed code" }</pre> |
+| Property   | Type   | Description                                                                                                                | Example                                                                                                                                                                                     |
+| ---------- | ------ | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `settings` | object | An object that contains the current settings of the tool. This object is writable and can be updated by the form controls. | <pre>{<br>&nbsp;&nbsp;"quote_text": "Hello",<br>&nbsp;&nbsp;"quote_text_size": 3,<br>}</pre>                                                                                                |
+| `id`       | string | A unique identifier for the tool instance that maps each tool instance to its DB stored settings.                          | `'123e4567-e89b-12d3-a456-426614174000'`                                                                                                                                                    |
+| `output`   | object | An object that contains the output of the tool. This object is writable and can be updated by the form controls.           | <pre>{<br>&nbsp;&nbsp;"code": "\<iframe>...",<br>&nbsp;&nbsp;"title" (optional): "Copy your embed code here",<br>&nbsp;&nbsp;"description" (optional): "This is your embed code"<br>}</pre> |
 
 ### Layout
 
-Each Settings component is a `form` element with one or more `fieldset` elements representing different setting blocks containing individual settings. Here's the `Settings` "anatomy" showing all 6 core elements, their HTML tags, and pre-defined CSS classes:
+Each `Settings` component is a `form` element with one or more `fieldset` elements representing different setting blocks containing individual settings. Here's the `Settings` "anatomy" showing all 6 core elements, their HTML tags, and pre-defined CSS classes:
 
 <img src='https://i.ibb.co/cwcK0nG/Settings-anatomy.jpg' width='100%'>
 
@@ -74,7 +74,9 @@ _Note, helper components will likely move into a shared library in the future._
 
 [Tailwind](https://tailwindcss.com/docs) is being used for all `Settings` CSS.
 
-In order to maintain consistent styling, the following style assets are being shared between the RIGA Editor and the tool template repositories. Please make sure the following assets and configurations are being copied over from the respective directories and files:
+In order to maintain consistent styling, the following style assets are being shared between the RIGA Editor and the tool template repositories.
+
+**Please make sure the following assets and configurations are being copied over from the respective RIGA Editor directories and files**:
 
 - Fonts from RIGA Editor are required in `/static/fonts` for development
 - Configuration required from the RIGA Editor's [`tailwind.config.cjs`](https://github.com/rferl/riga-editor/blob/main/tailwind.config.cjs):
@@ -169,9 +171,9 @@ For unique element attributes (`id`, `name`, `for`, ...) you can use the utility
 
 ## Tool Frontend
 
-All RIGA tool templates are assumed to have settings. Some tools might be backend-only services, some might come with a rendered UI. Both, the tool's potential backend and frontend, are consciously decoupled from the Settings component, so any tool frontend the tool developer conceives doesn't have to be a Svelte component for example, to allow maximum flexibility and integration of separately built tools.
+All RIGA tool templates are assumed to have settings. Some tools might be backend-only services, some might come with a rendered UI. Both, the tool's potential backend and frontend, are consciously decoupled from the `Settings` component to allow maximum flexibility and integration of separately built tools.
 
-However, if you're building a UI-based tool you can use this repo as a development environment. This might even make sense as your `Settings` component and tool frontend are in the same place and can be developed and previewed in the same environment.
+However, if you're building a UI-based tool you _can_ use this repo as a development environment. This might even make sense as your `Settings` component and tool frontend are in the same place and can be developed and previewed in the same environment. The following considers this use case:
 
 ### Quickstart
 
@@ -197,6 +199,8 @@ However, if you're building a UI-based tool you can use this repo as a developme
 
 ### Developing your tool's frontend
 
+Ideally, you write your tool frontend entirely within `src/routes/index` directory including components, stores, and utilities you might be using. This way you keep your forntend separate from the `Settings` component using the home route and the `src/lib` directory structure.
+
 #### Required steps
 
 Regardless of where you build your tool frontend - in a separate repo or within this tool template repo - you will likely be interested in:
@@ -211,8 +215,8 @@ _Note, that this is only tested with iframes so far._
 
 Once the ID is retrieved you can use a GET request to retrieve the settings from the RGA API:
 
-```
-const response = await fetch(`${riga_endpoint_url}/api/tools/${id}`);
+```js
+const response = await fetch(`${RIGA_API_ENDPOINT}/api/tools/${id}`);
 const responseData = await response.json();
 const settings = responseData?.tool?.settings;
 ```
@@ -223,7 +227,7 @@ Now your tool frontend can use the `settings` object for any logic or to produce
 
 When running `npm run dev` and navigating to the given localhost, you can view your tool frontend full screen at the `/index` route.
 
-Alternatively, you can view it on the home `/` route within a preview pane next to the settings panel. The preview pane is an iframe that points to the `/index` route and also passes through the `settings` store as a `settings` URL parameter via the iframe's `src` attribute. This way, you can see live changes as the settings from the `Settings` component will be passed through to your tool UI immediately.
+Alternatively, you can view it on the home `/` route within a preview pane next to the settings panel. The preview pane is an iframe that points to the `/index` route. The `settings` are passed through [URI-encoded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) as a `settings` URL parameter via the iframe's `src` attribute. This way, you can see settings changes live in the tool UI preview.
 
 To make this work, you will need to add some logic to your tool frontend code to distinguish between development and production. In development mode, no tool instance ID will be available for you to use in order to fetch the settings from the API as [described above](#required-steps). Instead, the settings are being passed through directly.
 
@@ -250,10 +254,6 @@ When you build your tool's frontend with `npm run build`, SvelteKit will compile
 The entry HTML file will be `index.html` as the route name `src/routes/index` will translate to `index.html`.
 
 You can now host the `build` folder and use the hosting URL in your output embed code, for example.
-
-#### Can I use Svelte when writing my tool?
-
-Yes. You can write vanilla HTML, but it seems prudent to use Svelte if you choose to build your tool in this SvelteKit repo. Ideally, you should keep within the route directory for all components, stores, and utilities you might be using to keep these separate from the Settings component using the home route and the `src/lib` structure.
 
 ## Dependency notes
 
