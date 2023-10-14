@@ -1,8 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-// Values used across 
-const sideNavMinWidth = '2rem'
-
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
@@ -53,31 +50,6 @@ export default {
           '8': 'rgba(255, 255, 255, 0.8)',
         }
       },
-      spacing: {
-        'min-sidenav': sideNavMinWidth
-      },
-      maxWidth: {
-        'min-sidenav': sideNavMinWidth
-      },
-      lineHeight: {
-        'half': '0.5'
-      },
-      gridTemplateColumns: {
-        'card': 'repeat(auto-fit, minmax(180px, 1fr))',
-      },
-      scale: {
-        '102': '1.02',
-      },
-      keyframes: {
-        'scale-up-down': {
-          '0%, 100%': { transform: 'scale(1)' },
-          '33%': { transform: 'scale(1.05)' },
-          '66%': { transform: 'scale(0.98)' },
-        }
-      },
-      animation: {
-        'scale-up-down': 'scale-up-down 1s ease-in-out'
-      }
     },
   },
   plugins: [require('@tailwindcss/forms')],
