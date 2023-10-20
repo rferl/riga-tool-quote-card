@@ -5,16 +5,9 @@
 	import ColorPicker from './controls/ColorPicker.svelte';
 	import DropDown from './controls/Dropdown.svelte';
 	import config from './riga-tool.config.js';
+	import { decodeHtml } from '../utils/index.js';
 	import { updateOutput } from '../output/index.js';
 	import type { SettingsWritable, OutputWritable } from '../types/index.d.js';
-
-	// Helper funcs
-	function decodeHtml(html: string) {
-		if (typeof document === 'undefined') return html;
-		var txt = document.createElement('textarea');
-		txt.innerHTML = html;
-		return txt.value;
-	}
 
 	// Props
 	export let settings: SettingsWritable;
