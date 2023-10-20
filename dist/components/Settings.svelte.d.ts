@@ -1,9 +1,10 @@
 import { SvelteComponentTyped } from "svelte";
+import type { SettingsWritable, OutputWritable } from '../types/index.d.js';
 declare const __propDef: {
     props: {
+        settings: SettingsWritable;
         id: string;
-        settings: any;
-        output: any;
+        output: OutputWritable;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -12,8 +12,8 @@ function decodeHtml(html) {
   txt.innerHTML = html;
   return txt.value;
 }
-export let id;
 export let settings;
+export let id;
 export let output;
 const defaultSettings = config.settings;
 let isLoaded = false;

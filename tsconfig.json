@@ -11,5 +11,11 @@
 		"strict": true,
 		"moduleResolution": "node",
 		"module": "ESNext"
-	}
+	},
+	"exclude": [
+		"postcss.config.js",
+		"tailwind.config.cjs",
+		"svelte.config.js",
+		"scripts/generateLocalConfig.cjs"
+	]
 }
