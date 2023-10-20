@@ -4,14 +4,8 @@
 import ColorPicker from "./controls/ColorPicker.svelte";
 import DropDown from "./controls/Dropdown.svelte";
 import config from "./riga-tool.config.js";
+import { decodeHtml } from "../utils/index.js";
 import { updateOutput } from "../output/index.js";
-function decodeHtml(html) {
-  if (typeof document === "undefined")
-    return html;
-  var txt = document.createElement("textarea");
-  txt.innerHTML = html;
-  return txt.value;
-}
 export let settings;
 export let id;
 export let output;

@@ -1,5 +1,5 @@
 import { SvelteComponentTyped } from "svelte";
-import type { SettingsWritable } from '../../types/index.d.js';
+import type { SettingsWritable } from '../../types/index.d.ts';
 declare const __propDef: {
     props: {
         label?: string | undefined;

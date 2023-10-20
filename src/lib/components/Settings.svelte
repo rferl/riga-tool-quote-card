@@ -7,7 +7,7 @@
 	import config from './riga-tool.config.js';
 	import { decodeHtml } from '../utils/index.js';
 	import { updateOutput } from '../output/index.js';
-	import type { SettingsWritable, OutputWritable } from '../types/index.d.js';
+	import type { SettingsWritable, OutputWritable } from '../types/index.d.ts';
 
 	// Props
 	export let settings: SettingsWritable;
