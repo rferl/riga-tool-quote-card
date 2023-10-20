@@ -22,9 +22,7 @@
 
 	async function getSettings(id) {
 		//Get the data with a simple fetch (not working with strict CORS)
-		const response = await fetch(
-			`https://func-inno-prod-riga-api.azurewebsites.net/api/tools/${id}`
-		);
+		const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`);
 
 		if (!response.ok) {
 			console.error("Error fetching the tool's config json:", response.status, response.statusText);
@@ -55,10 +53,8 @@
 	<!-- The actual tool ui (only showing when data is loaded)-->
 	{#if !loading}
 		{#if !id}
-			<!-- {#if false} -->
 			<div class="note">Can't find a valid toolInstanceId in the pathname</div>
 		{:else if !settings}
-			<!-- {:else if false} -->
 			<div class="note">Sorry, can't find any settings for toolInstanceId "{id}""</div>
 		{:else}
 			<div id="tool-ui" style="background-color: {settings.quote_background_color}">
