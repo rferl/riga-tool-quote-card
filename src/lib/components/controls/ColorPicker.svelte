@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { setID } from '../../utils/index.js';
-	import type { SettingsWritable } from '../../types/index.d.js';
+	import type { SettingsWritable } from '../../types/index.d.ts';
 
 	export let label: string = 'Label';
 	export let settings: SettingsWritable;

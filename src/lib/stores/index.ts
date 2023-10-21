@@ -1,6 +1,6 @@
 import { writable } from "svelte/store"
 import config from '../components/riga-tool.config.js';
-import type { SettingsWritable } from "../types/index.d.js";
+import type { SettingsWritable } from "../types/index.d.ts";
 
 // Dynamic preview panel dimensions
 export const previewWidth = writable(0);

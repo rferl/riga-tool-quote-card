@@ -1,3 +1,9 @@
+/**
+ * Converts a string into a URL-friendly slug.
+ *
+ * @param {string} string - The string to be converted.
+ * @returns {string} The converted string.
+ */
 export function slugify(string) {
     const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
     const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
@@ -13,6 +19,11 @@ export function slugify(string) {
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+\$/, ''); // Trim - from end of text
 }
+/**
+ * Generates a random ID with a prefix of 'rt-'.
+ *
+ * @returns {string} The generated ID.
+ */
 export function setID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let prefix = 'rt-';
@@ -20,4 +31,17 @@ export function setID() {
         prefix += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return prefix;
+}
+/**
+ * Decodes HTML entities in a string.
+ *
+ * @param {string} html - The string containing HTML entities.
+ * @returns {string} The string with HTML entities decoded.
+ */
+export function decodeHtml(html) {
+    if (typeof document === 'undefined')
+        return html;
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
 }
