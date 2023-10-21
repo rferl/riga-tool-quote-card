@@ -2,17 +2,21 @@
 
 This is a pre-configured [**SvelteKit library project**](https://kit.svelte.dev/docs/packaging) for a RIGA tool developer to build a Svelte `Settings` component and configure its use for further integration within the [RIGA Editor](https://github.com/rferl/riga-editor).
 
-It also offers a **development environment** that allows you to construct, preview, and test your `Settings` component during development.
+It also functions as a **development environment** that allows you to construct, preview, and test your `Settings` component during development.
 
 Additionally, this repository can be used to build, develop, and expose a **tool frontend** in case your tool template provides a frontend.
 
-The repository exposes:
+On `npm run build`:
+
+1. a `dist` folder is created containing the library and
+2. a `build` folder is created containing the optional tool frontend build.
+
+The library exposes:
 
 1. a `riga-tool.config.yml` configuration file
 2. a `Settings.svelte` component
-3. an optional tool frontend (if applicable)
 
-Once built, the library can be installed using `npm install` and used within the [RIGA Editor](https://github.com/rferl/riga-editor).
+...and is aimed to be `npm install`'ed by and used within the [RIGA Editor](https://github.com/rferl/riga-editor).
 
 ## Quickstart
 
@@ -27,6 +31,58 @@ Once built, the library can be installed using `npm install` and used within the
 5. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
 
 6. Once you're happy with your component, run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
+
+## Structure
+
+The following describes key **top level** directories and files:
+
+```
+.
+├── build                   → Tool frontend built (optional)
+├── dist                    → Library folder to be exposed
+├── scripts                 → Prebuild scripts
+├── src                     → Source folder
+├── static                  → Fonts and favicon
+├── riga-tool.config.yml    → Tool configuration file
+├── package.json            → Config files ...
+├── postcss.config.js
+├── svelte.config.js
+├── tailwind.config.cjs
+├── tsconfig.json
+├── vite.config.ts
+└── ...
+```
+
+And here's a description of the key directories and files within the **source directory**:
+
+```
+.
+├── ...
+├── src
+│   ├── lib
+│   │   ├── components
+│   │   │   ├── Settings.svelte       → Settings component
+│   │   │   │                           to build out by developer
+│   │   │   ├── controls              → Helper components
+│   │   │   │                           for Settings.svelte
+│   │   │   ├── preview               → Helper components for
+│   │   │   │                           dev preview (leave as is)
+│   │   │   └── riga-tool.config.ts   → Tool config file (automatically
+│   │   │                               generated from tool config yml)
+│   │   └── ...
+│   └── routes
+│       ├── ...
+│       ├── +page.svelte              → Dev environment page build
+│       └── index                     → Optional tool frontend route
+│           ├── ...
+│           └── +page.svelte          → Tool frontend page build
+│   ├── ...
+└── └── app.css
+```
+
+As a tool developer you will mainly work with the top level `riga-tool.config.yml` and within the `src` folder, specifically the `Settings.svelte` component and potentially components you use or build in the `src/components/controls` folder.
+
+Building a tool frontend within this repository would further involve work in the `src/routes/index` folder, specifically its `+page.svelte` file.
 
 ## The `riga-tool.config.yml` configuration file
 
@@ -67,6 +123,8 @@ See [`src/lib/components/Settings.svelte`](src/lib/components/Settings.svelte) f
 ### How to write a single setting?
 
 It's up to you how to implement a setting - you can write vanilla HTML or you can write your own sub-components. Alternatively, you can use a set of predefined components for common controls like dropdowns or color picker living in `src/lib/components/controls`.
+
+Please note, you should avoid using SvelteKit-specific modules in your packages (see [here](https://kit.svelte.dev/docs/packaging#best-practices) for more).
 
 _Note, helper components will likely move into a shared library in the future._
 
@@ -110,7 +168,7 @@ You can control the layout and dimensions of your individual settings or setting
 
 The `Settings`'s core task is to capture settings a template author will set or change via the component's inputs.
 
-The update mechanic is straightforward: the `Settings` component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) from the RIGA Editor it gets loaded into. This settings store can be updated on input change. For example:
+The update mechanic is straightforward: the `Settings` component receives a [Svelte writable store](https://svelte.dev/docs#run-time-svelte-store-writable) from the RIGA Editor it gets loaded into. This settings store can be updated within `Settings` on input change. For example:
 
 ```html
 <script>
@@ -153,7 +211,15 @@ To compose your output, use the `updateOutput` function in the [`src/lib/output/
 
 ### Utilities
 
-For unique element attributes (`id`, `name`, `for`, ...) you can use the utility function `setID()`. This is entirely up to you but might be helpful. Example usage in the `Dropdown` component:
+Some potentially helpful utility functions are available in `./src/lib/utils/index.ts`:
+
+#### `decodeHtml(<string>)`
+
+`decodeHtml`, takes a string containing HTML entities as input and returns a string with all HTML entities decoded. For example, it would convert `&amp;` into `&`, `&lt;` into `<`, and `&gt;` into `>`. Useful if you want to display HTML entities as symbols. Make sure to let `decodeHtml` convert user input to avoid [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) risks.
+
+#### `setID()`
+
+`setID` can be helpful to create and use unique element attributes (`id`, `name`, `for`, ...). Example usage in the `Dropdown` component:
 
 ```html
 <script lang="ts">
@@ -168,6 +234,10 @@ For unique element attributes (`id`, `name`, `for`, ...) you can use the utility
 
 <!-- ...other elements... -->
 ```
+
+#### `slugify()`
+
+`slugify`, takes a string as input and transforms it into a URL-friendly slug, ensuring it conforms to JavaScript naming conventions by replacing spaces and special characters with URL-safe characters.
 
 ## Tool Frontend
 
@@ -199,7 +269,7 @@ However, if you're building a UI-based tool you _can_ use this repo as a develop
 
 ### Developing your tool's frontend
 
-Ideally, you write your tool frontend entirely within `src/routes/index` directory including components, stores, and utilities you might be using. This way you keep your forntend separate from the `Settings` component using the home route and the `src/lib` directory structure.
+Ideally, you write your tool frontend entirely within `src/routes/index` directory including components, stores, and utilities you might be using. This way you keep your frontend separate from the `Settings` component which is being built in `src/lib` and can be previewed on the home route `/`.
 
 #### Required steps
 
@@ -209,11 +279,11 @@ Regardless of where you build your tool frontend - in a separate repo or within 
 2. retrieving the tool instance setting object with the ID via the [RIGA API](https://github.com/rferl/riga-api)
 3. using the settings in your tool frontend
 
-You can retrieve the tool instance ID in various ways depending on the embedding format and it is up to you how you do it in detail. Using for example an iframe embed, the tool frontend could get the id as a URL parameter via the iframe's `src` URL. See other options listed in [this issue](https://github.com/rferl/riga-editor/issues/52#issuecomment-1721561651).
+You can retrieve the tool instance ID in various ways depending on the embedding format and it is up to you how you do it in detail. Using for example, an iframe embed, the tool frontend could get the ID as a URL parameter via the iframe's `src` URL. See other options listed in [this issue](https://github.com/rferl/riga-editor/issues/52#issuecomment-1721561651).
 
 _Note, that this is only tested with iframes so far._
 
-Once the ID is retrieved you can use a GET request to retrieve the settings from the RGA API:
+Once the ID is retrieved, you can use a GET request to retrieve the settings from the RGA API:
 
 ```js
 const response = await fetch(`${RIGA_API_ENDPOINT}/api/tools/${id}`);
@@ -221,11 +291,25 @@ const responseData = await response.json();
 const settings = responseData?.tool?.settings;
 ```
 
-Now your tool frontend can use the `settings` object for any logic or to produce, style, configure its elements.
+Now your tool frontend can use the `settings` object for any logic or to produce, style or configure its elements.
+
+#### .env
+
+Typically you would want to store the RIGA API endpoint url in an `.env` file rather than in your frontend code. To do so:
+
+1. copy `.env.example` at root
+2. rename it to `.env`
+3. add the endpoint as value to `VITE_RIGA_API_ENDPOINT`
+
+Now you can refer to it for example as:
+
+```js
+const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`);
+```
 
 #### How can I view my tool during development?
 
-When running `npm run dev` and navigating to the given localhost, you can view your tool frontend full screen at the `/index` route.
+When running `npm run dev` and navigating to the given localhost, you can view your tool frontend full screen on the `/index` route.
 
 Alternatively, you can view it on the home `/` route within a preview pane next to the settings panel. The preview pane is an iframe that points to the `/index` route. The `settings` are passed through [URI-encoded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) as a `settings` URL parameter via the iframe's `src` attribute. This way, you can see settings changes live in the tool UI preview.
 
@@ -264,10 +348,36 @@ You can now host the `build` folder and use the hosting URL in your output embed
 - [`@tailwindcss/forms`](https://github.com/tailwindlabs/tailwindcss-forms) allows form element reset/styling.
 - When working with VSCode, also install the [PostCSS Language Support](https://github.com/csstools/postcss-language) plugin to get rid of `@` rule warnings ([more](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)).
 
+### Typescript
+
+The Svelte component is build with typescript. It is up to you if you want to use typescript for your optional frontend is up to you.
+
+Note, that when importing typescript files import them as `.js` files rather than `.ts` files. For example you would import a file at `path/myFile.ts` like so:
+
+```js
+import { myModule } from 'path/myFile.js';
+```
+
+Read more about this [here](https://kit.svelte.dev/docs/packaging#caveats).
+
+However, import **type declaration** files (`.d.ts` files) as what they are as these imports are getting stripped out by the typescript compiler before packaging. For example the following is correct:
+
+```js
+import type { SettingsWritable } from '../types/index.d.ts';
+```
+
 ---
 
 ## Next steps
 
-- **Shared library**: Both the RIGA Editor repo and the tool repos share `Settings.svelte`, Tailwind classes, types, and fonts. Components for the tool edit page can also be abstracted and shared. A library to be installed by both repositories seems obvious, but it would ideally wait for a better understanding of how the repos relate to each other (npm installs, submodules, mono repo, etc.).
+- Both the RIGA Editor repo and the tool repos share `Settings.svelte`, Tailwind classes, types, and fonts. Components for the tool edit page can also be abstracted and shared. A **library** to be installed by both repositories seems obvious, but it would ideally wait for a better understanding of how the repos relate to each other (npm installs, submodules, mono repo, etc.).
 
   In addition, the library should hold components used across all tool templates.
+
+- The current preview setup assumes the tool frontend build to happen in the same repo under the `/index` route. This could potentially be changed to **work with apps hosted elsewhere**, but we would need an additional config field for the tool UI host url.
+
+- Consider and implement tool template **versioning**. A potential workflow:
+  - All code changes follow semver reflected in `package.json`
+  - A new version field in `riga-tool.config.yml` tracks the repo version
+  - The tool frontend gets versioned and follows the versioning of the `Settings` library. Should be simple if the tool is developper in the same repo.
+  - The tool frontend performs a version compatibility check. If the versions are not compatible, it can show an error message or a warning to the user.
