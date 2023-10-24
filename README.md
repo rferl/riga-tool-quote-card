@@ -379,5 +379,5 @@ import type { SettingsWritable } from '../types/index.d.ts';
 - Consider and implement tool template **versioning**. A potential workflow:
   - All code changes follow semver reflected in `package.json`
   - A new version field in `riga-tool.config.yml` tracks the repo version
-  - The tool frontend gets versioned and follows the versioning of the `Settings` library. Should be simple if the tool is developper in the same repo.
-  - The tool frontend performs a version compatibility check. If the versions are not compatible, it can show an error message or a warning to the user.
+  - The tool frontend gets versioned - following the versioning of the `Settings` library. Should be straight forward if the tool is developed in the same repo.
+  - The tool frontend performs a version compatibility check. Errors/warns if the versions are incompatible.
