@@ -22,7 +22,7 @@ The library exposes:
 
 1. Clone the repo
 
-2. In `package.json`, set the `name` to your tool's name prefixed with `riga-` (e.g., `riga-quote-card`)
+2. In `package.json`, set the `name` to your tool's name prefixed with `riga-editor` (e.g., `riga-editor-quote-card`)
 
 3. Populate the `riga-tool.config.yml` (see below for details)
 
