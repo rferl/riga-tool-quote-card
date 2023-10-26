@@ -11,6 +11,18 @@
 	let settings = null;
 	let loading = true;
 
+	let token = null;
+
+    async function getAccessToken() {
+        const response = await fetch('/api/getAccessToken');
+        if (response.ok) {
+            const data = await response.json();
+            token = data.access_token;
+        } else {
+            console.error("Error fetching the access token");
+        }
+    }
+
 	// Production
 	function getId() {
 		// The tool instance id will be passed through as URL param
@@ -21,13 +33,23 @@
 	}
 
 	async function getSettings(id) {
-		//Get the data with a simple fetch (not working with strict CORS)
-		const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`);
+		if (!token) {
+            await getAccessToken(); // Get the access token before proceeding
+        }
+
+        // Add the Authorization header with the token
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+
+        //Get the data with a simple fetch (not working with strict CORS)
+        const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`, { headers });
 
 		if (!response.ok) {
 			console.error("Error fetching the tool's config json:", response.status, response.statusText);
 			return null;
 		}
+		
 		const responseData = await response.json();
 
 		return responseData?.tool?.settings ?? null;
