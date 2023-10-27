@@ -1,5 +1,7 @@
-import { app } from '@azure/functions';
-import axios from 'axios';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { app } = require('@azure/functions');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const axios = require('axios');
 
 app.http('getAccessToken', {
     methods: ['GET', 'POST'],
@@ -27,6 +29,14 @@ app.http('getAccessToken', {
             };
         } catch (error) {
             context.log(`[ERROR] Error fetching the access token: ${error.message}`);
+
+            if (error.response) {
+                
+                context.log(error.response.data);
+                // context.log(error.response.status);
+                // context.log(error.response.headers);
+            }
+
             context.res = {
                 status: 500,
                 body: 'Error fetching the access token.',
