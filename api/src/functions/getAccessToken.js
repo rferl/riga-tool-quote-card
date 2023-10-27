@@ -8,6 +8,16 @@ app.http('getAccessToken', {
     authLevel: 'anonymous',
     handler: async (request, context) => {
 
+        return context.res = {
+            status: 200,
+            body: JSON.stringify({
+                message: "Hello from the API",
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
         const params = new URLSearchParams();
         params.append('client_id', process.env.CLIENT_ID);
         params.append('scope', `${process.env.CLIENT_ID}/.default`);
