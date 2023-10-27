@@ -7,6 +7,7 @@ app.http('getAccessToken', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
+
         const params = new URLSearchParams();
         params.append('client_id', process.env.CLIENT_ID);
         params.append('scope', `${process.env.CLIENT_ID}/.default`);
@@ -23,24 +24,35 @@ app.http('getAccessToken', {
                 },
             });
 
-            context.res = {
+            return context.res = {
                 status: 200,
-                body: response.data,
+                body: JSON.stringify(response.data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             };
+
         } catch (error) {
             context.log(`[ERROR] Error fetching the access token: ${error.message}`);
 
             if (error.response) {
-                
+
                 context.log(error.response.data);
                 // context.log(error.response.status);
                 // context.log(error.response.headers);
             }
 
-            context.res = {
+            return context.res = {
                 status: 500,
-                body: 'Error fetching the access token.',
+                body:  JSON.stringify({
+                    error: 'Error fetching the access token.',
+                    details: error.message
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             };
         }
+
     }
 });
