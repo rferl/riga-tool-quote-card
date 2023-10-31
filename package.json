@@ -17,7 +17,7 @@
 		"generateConfig": "node scripts/generateLocalConfig.cjs"
 	},
 	"engines": {
-		"node": "^18.0.0"
+		"node": "~12"
 	},
 	"exports": {
 		".": {
@@ -33,6 +33,7 @@
 		"riga-tool.config.yml"
 	],
 	"dependencies": {
+		"@azure/functions": "^3.5.1",
 		"@sveltejs/kit": "^1.26.0",
 		"axios": "^1.6.0"
 	},
@@ -40,7 +41,6 @@
 		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
-		"@azure/functions": "^4.0.1",
 		"@azure/static-web-apps-cli": "^1.1.4",
 		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/package": "^2.0.0",
