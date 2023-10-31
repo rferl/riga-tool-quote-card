@@ -4,13 +4,17 @@
 	import Controls from '$lib/components/preview/Controls.svelte';
 	import SettingsWrap from '$lib/components/preview/SettingsWrap.svelte';
 	import Preview from '$lib/components/preview/Preview.svelte';
+	import Output from '$lib/components/preview/Output.svelte';
 </script>
 
 <div class={`base-grid ${config.ui ? 'ui-true' : 'ui-false'}`}>
 	<div class="base-titles"><Title /></div>
 	<div class="base-controls"><Controls /></div>
 	<div class="base-settings"><SettingsWrap /></div>
-	<div class="base-preview"><Preview /></div>
+	<div class="base-preview">
+		<Preview />
+		<Output />
+	</div>
 </div>
 
 <style>
@@ -54,7 +58,7 @@
 		.base-grid {
 			margin: 0 4rem;
 			grid-template-columns: minmax(0, 400px) minmax(0, 1fr); /* set Settings col width */
-			grid-template-rows: 10% 90%; /* need height for Settings overflow to work */
+			grid-template-rows: 10% 90%; /* adjust the height for Settings and Preview */
 			grid-template-areas:
 				'titles controls'
 				'settings preview';

@@ -33,7 +33,7 @@
 {#if config.ui}
 	<div class="m-4 h-full max-h-[500px] md:max-w-[750px]" bind:clientWidth={w} bind:clientHeight={h}>
 		<div
-			class="shadow-lg outline outline-gray-200"
+			class="shadow-lg outline outline-gray-100"
 			style="width: {$previewWidth}px; height: {$previewHeight}px"
 		>
 			<iframe
