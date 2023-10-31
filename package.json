@@ -17,7 +17,7 @@
 		"generateConfig": "node scripts/generateLocalConfig.cjs"
 	},
 	"engines": {
-		"node": "~12"
+		"node": "~18"
 	},
 	"exports": {
 		".": {
