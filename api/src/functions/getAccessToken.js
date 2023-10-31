@@ -8,15 +8,12 @@ app.http('getAccessToken', {
     authLevel: 'anonymous',
     handler: async (request, context) => {
 
-        return context.res = {
-            status: 200,
-            body: JSON.stringify({
-                message: "Hello from the API",
-            }),
+        let response = {
+            status: 500,
             headers: {
                 'Content-Type': 'application/json'
             }
-        };
+        }
 
         const params = new URLSearchParams();
         params.append('client_id', process.env.CLIENT_ID);
@@ -24,23 +21,20 @@ app.http('getAccessToken', {
         params.append('grant_type', 'client_credentials');
         params.append('client_secret', process.env.CLIENT_SECRET);
 
+        context.log(params);
+
         const tenantId = process.env.TENANT_ID;
         const endpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
 
         try {
-            const response = await axios.post(endpoint, params, {
+            const loginResponse = await axios.post(endpoint, params, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
             });
 
-            return context.res = {
-                status: 200,
-                body: JSON.stringify(response.data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
+            response.status = 200;
+            response.body = JSON.stringify(loginResponse.data);
 
         } catch (error) {
             context.log(`[ERROR] Error fetching the access token: ${error.message}`);
@@ -52,17 +46,14 @@ app.http('getAccessToken', {
                 // context.log(error.response.headers);
             }
 
-            return context.res = {
-                status: 500,
-                body:  JSON.stringify({
-                    error: 'Error fetching the access token.',
-                    details: error.message
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
+            response.status = 500;
+            response.body = JSON.stringify({
+                error: 'Error fetching the access token.',
+                details: error.message
+            });
         }
+
+        return response;
 
     }
 });
