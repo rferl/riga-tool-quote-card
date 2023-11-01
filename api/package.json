@@ -8,7 +8,6 @@
   },
   "main": "src/functions/*.js",
   "dependencies": {
-    "@azure/functions": "^3.5.1",
     "axios": "^1.6.0"
   }
 }
