@@ -41,7 +41,7 @@
 			Authorization: `Bearer ${token}`
 		};
 
-		//Get the data with a simple fetch (not working with strict CORS)
+		// Get the data with a simple fetch (not working with strict CORS)
 		const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`, {
 			headers
 		});

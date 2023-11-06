@@ -3,9 +3,9 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	// TODO for dev only - remove for production
 	build: {
-		minify: false
+		// Switch to false for dev if helpful:
+		minify: true
 	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
