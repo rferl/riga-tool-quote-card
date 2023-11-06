@@ -22,13 +22,13 @@ The library exposes:
 
 1. Clone the repo
 
-2. In `package.json`, set the `name` to your tool's name prefixed with `riga-editor` (e.g., `riga-editor-quote-card`)
+2. In `package.json`, set the `name` to your tool's name prefixed with `riga-editor-` (e.g., `riga-editor-quote-card`)
 
 3. Populate the `riga-tool.config.yml` (see below for details)
 
 4. Run `npm run dev` for development and preview your `Settings` component on the given localhost
 
-5. Build out the settings component `src/lib/components/Settings.svelte` (see below for more info)
+5. Build out the settings component `src/lib/components/Settings.svelte` (see below for details)
 
 6. Once you're happy with your component, run `npm run package`. This will produce a `./dist` folder crucially including an `index.js` file exporting your `Settings` component for consumption in the RIGA Editor once npm installed.
 
@@ -38,6 +38,7 @@ The following describes key **top level** directories and files:
 
 ```
 .
+├── api                     → Tool frontend API (optional)
 ├── build                   → Tool frontend built (optional)
 ├── dist                    → Library folder to be exposed
 ├── scripts                 → Prebuild scripts
@@ -77,7 +78,8 @@ And here's a description of the key directories and files within the **source di
 │           ├── ...
 │           └── +page.svelte          → Tool frontend page build
 │   ├── ...
-└── └── app.css
+└── └── app.css                       → Tailwind CSS file loaded by
+                                        preview editor
 ```
 
 As a tool developer you will mainly work with the top level `riga-tool.config.yml` and within the `src` folder, specifically the `Settings.svelte` component and potentially components you use or build in the `src/components/controls` folder.
@@ -247,6 +249,8 @@ However, if you're building a UI-based tool you _can_ use this repo as a develop
 
 ### Quickstart
 
+_Note, that steps 1 to 3 are done if you're working off this very repo._
+
 1. Create a new route in `src/routes` by adding a new directory (using SvelteKit's [file-system based routing](https://kit.svelte.dev/docs/routing))
 
 2. Name it `src/routes/index`
@@ -273,17 +277,17 @@ Ideally, you write your tool frontend entirely within `src/routes/index` directo
 
 #### Required steps
 
-Regardless of where you build your tool frontend - in a separate repo or within this tool template repo - you will likely be interested in:
+Regardless of where you build your tool frontend - in a separate repo or within this tool template repo - your frontend code will likely want to do the following:
 
-1. retrieving the tool instance ID
-2. retrieving the tool instance setting object with the ID via the [RIGA API](https://github.com/rferl/riga-api)
-3. using the settings in your tool frontend
+1. retrieve the tool instance ID
+2. retrieve the tool instance setting object with the ID via the [RIGA API](https://github.com/rferl/riga-api)
+3. use the settings in your tool frontend
 
-You can retrieve the tool instance ID in various ways depending on the embedding format and it is up to you how you do it in detail. Using for example, an iframe embed, the tool frontend could get the ID as a URL parameter via the iframe's `src` URL. See other options listed in [this issue](https://github.com/rferl/riga-editor/issues/52#issuecomment-1721561651).
+You can retrieve the tool instance ID in various ways depending on the embedding format and it is up to you how you do it in detail. Using for example, an iframe embed, the tool frontend could get the ID as a URL parameter via the iframe's `src` URL. See other options listed in [this GH issue](https://github.com/rferl/riga-editor/issues/52#issuecomment-1721561651).
 
 _Note, that this is only tested with iframes so far._
 
-Once the ID is retrieved, you can use a GET request to retrieve the settings from the RGA API:
+Once the ID is retrieved, you can use a GET request to retrieve the settings from the RIGA API:
 
 ```js
 const response = await fetch(`${RIGA_API_ENDPOINT}/api/tools/${id}`);
@@ -293,19 +297,51 @@ const settings = responseData?.tool?.settings;
 
 Now your tool frontend can use the `settings` object for any logic or to produce, style or configure its elements.
 
+#### Authenticating requests to the API
+
+The RIGA API's GET request requires authentication. To facilitate authentication, this example repo is an [Azure Static Web App](https://learn.microsoft.com/en-us/azure/static-web-apps/) that makes use of a _Managed Azure Function_ as an intermediary or a proxy, which on behalf of the front-end application, fetches the Access Token from Microsoft's identity platform. This is handled in a function (i.e. on the server) so as not to expose the `CLIENT_SECRET` and other credentials to the application front-end.
+
+These tokens are then used as an Authorization Bearer header in AJAX requests to the main riga-api, ensuring the API calls are authenticated. See [the API docs for details on authentication](https://github.com/rferl/riga-api#authentication-overview).
+
+#### Steps for Authenticating Requests
+
+- **Fetching the Access Token**: when the front-end application needs to make an authenticated request to the RIGA API, it must first get a valid access token from Microsoft's identity platform. This requires having access to environment variables such as `CLIENT_ID`, `CLIENT_SECRET`, and `TENANT_ID` in a secure environment (e.g. an Azure Function) to make a POST request to the Microsoft identity platform to fetch the Access Token.
+
+- **Receiving the Access Token**: once the Access Token is retrieved it is returned to the front-end application.
+
+- **Making Authenticated Requests**: the front-end application now attaches this token as a Bearer token in the Authorization header of its AJAX requests to the riga-api.
+  For example:
+
+  ```js
+  headers: {
+    'Authorization': `Bearer ${accessToken}`
+  }
+  ```
+
+- **API Verification**: the RIGA API receives the request and validates the Bearer token. If the token is valid, the API processes the request; otherwise, it returns an authentication error.
+
 #### .env
 
 Typically you would want to store the RIGA API endpoint url in an `.env` file rather than in your frontend code. To do so:
 
 1. copy `.env.example` at root
 2. rename it to `.env`
-3. add the endpoint as value to `VITE_RIGA_API_ENDPOINT`
+3. add values to the following variables:
 
-Now you can refer to it for example as:
+   - `VITE_RIGA_API_ENDPOINT`: the RIGA API endpoint. Once set you can use it as part of your GET request like so:
 
-```js
-const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`);
-```
+     ```js
+     const response = await fetch(`${import.meta.env.VITE_RIGA_API_ENDPOINT}/api/tools/${id}`);
+     ```
+
+   - `CLIENT_ID`: the unique identifier assigned to your application by Azure Active Directory when the application is registered. It is used by the application to identify itself to the users that it interacts with.
+
+   - `CLIENT_SECRET`: a secret known only to the application and the authorization server. It is used by the application to authenticate itself to the authorization server when it requests to access a user's resources.
+
+   - `TENANT_ID`: the unique identifier of the Azure Active Directory tenant that the application is registered with. It is used by the application to direct the user to the correct login page when they attempt to authenticate.
+     Now you can refer to it for example as:
+
+Always ensure your environment variables are secure. Regularly rotate your secrets, especially if you believe they might have been compromised.
 
 #### How can I view my tool during development?
 
@@ -365,19 +401,3 @@ However, import **type declaration** files (`.d.ts` files) as what they are as t
 ```js
 import type { SettingsWritable } from '../types/index.d.ts';
 ```
-
----
-
-## Next steps
-
-- Both the RIGA Editor repo and the tool repos share `Settings.svelte`, Tailwind classes, types, and fonts. Components for the tool edit page can also be abstracted and shared. A **library** to be installed by both repositories seems obvious, but it would ideally wait for a better understanding of how the repos relate to each other (npm installs, submodules, mono repo, etc.).
-
-  In addition, the library should hold components used across all tool templates.
-
-- The current preview setup assumes the tool frontend build to happen in the same repo under the `/index` route. This could potentially be changed to **work with apps hosted elsewhere**, but we would need an additional config field for the tool UI host url.
-
-- Consider and implement tool template **versioning**. A potential workflow:
-  - All code changes follow semver reflected in `package.json`
-  - A new version field in `riga-tool.config.yml` tracks the repo version
-  - The tool frontend gets versioned - following the versioning of the `Settings` library. Should be straight forward if the tool is developed in the same repo.
-  - The tool frontend performs a version compatibility check. Errors/warns if the versions are incompatible.
