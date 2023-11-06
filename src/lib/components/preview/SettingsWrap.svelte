@@ -3,13 +3,10 @@
 		 (2) prepares tool UI preview of tools build in `/index` route -->
 <script lang="ts">
 	import Settings from '$lib/components/Settings.svelte';
-	import { writable } from 'svelte/store';
-	import { settings } from '$lib/stores';
-	import type { OutputWritable } from '$lib/types';
+	import { settings, output } from '$lib/stores';
 
 	// Emulate required but herein unused props
 	const id = '';
-	const output: OutputWritable = writable({ code: '' });
 </script>
 
 <div class="h-full p-4">
