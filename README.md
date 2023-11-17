@@ -45,7 +45,7 @@ The following describes key **top level** directories and files:
 ├── src                     → Source folder
 ├── static                  → Fonts and favicon
 ├── riga-tool.config.yml    → Tool configuration file
-├── package.json            → Config files ...
+├── package.json            → Other configuration files ...
 ├── postcss.config.js
 ├── svelte.config.js
 ├── tailwind.config.cjs
