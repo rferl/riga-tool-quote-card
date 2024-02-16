@@ -34,7 +34,7 @@
 	],
 	"dependencies": {
 		"@azure/functions": "^3.5.1",
-		"@sveltejs/kit": "^1.26.0",
+		"@sveltejs/kit": "^2.5.0",
 		"axios": "^1.6.0"
 	},
 	"peerDependencies": {
@@ -42,7 +42,7 @@
 	},
 	"devDependencies": {
 		"@azure/static-web-apps-cli": "^1.1.4",
-		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/package": "^2.0.0",
 		"@tailwindcss/forms": "^0.5.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
